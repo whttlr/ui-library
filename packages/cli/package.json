@@ -1,0 +1,29 @@
+{
+  "name": "@whttlr/ui-cli",
+  "version": "0.0.0",
+  "description": "CLI tools for Whttlr UI components",
+  "main": "dist/index.js",
+  "bin": {
+    "whttlr-ui": "./bin/whttlr-ui"
+  },
+  "files": ["dist", "bin"],
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "test": "jest",
+    "lint": "eslint src/**/*.{ts,tsx}",
+    "clean": "rimraf dist"
+  },
+  "dependencies": {
+    "commander": "^10.0.0",
+    "inquirer": "^9.2.0",
+    "chalk": "^5.2.0",
+    "fs-extra": "^11.1.0",
+    "mustache": "^4.2.0"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.0",
+    "@types/inquirer": "^9.0.0",
+    "@types/mustache": "^4.2.0"
+  }
+}

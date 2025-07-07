@@ -1,0 +1,23 @@
+#!/usr/bin/env node
+
+const { program } = require('commander');
+const path = require('path');
+
+// Set up the CLI program
+program
+  .name('whttlr-ui')
+  .description('CLI tools for Whttlr UI components')
+  .version('0.0.0');
+
+// Load commands
+require(path.join(__dirname, '../dist/commands/generate'));
+require(path.join(__dirname, '../dist/commands/theme'));
+require(path.join(__dirname, '../dist/commands/migrate'));
+
+// Parse command line arguments
+program.parse(process.argv);
+
+// Show help if no command is provided
+if (!process.argv.slice(2).length) {
+  program.outputHelp();
+}

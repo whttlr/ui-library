@@ -1,0 +1,49 @@
+{
+  "name": "@whttlr/ui-core",
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Core UI components for Whttlr applications",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "test": "jest",
+    "lint": "eslint src/**/*.{ts,tsx}",
+    "clean": "rimraf dist"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^5.0.0",
+    "@radix-ui/react-slot": "^1.0.2",
+    "@react-three/drei": "^9.122.0",
+    "@react-three/fiber": "^8.18.0",
+    "@types/three": "^0.178.0",
+    "@whttlr/ui-theme": "workspace:*",
+    "antd": "^5.0.0",
+    "class-variance-authority": "^0.7.0",
+    "framer-motion": "^10.0.0",
+    "lucide-react": "^0.263.1",
+    "react-router-dom": "^6.0.0",
+    "recharts": "^2.8.0",
+    "three": "^0.160.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0"
+  }
+}

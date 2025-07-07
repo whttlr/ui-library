@@ -1,0 +1,185 @@
+/**
+ * {{componentName}} Component
+ * 
+ * {{#isCNC}}Industrial CNC control component{{/isCNC}}{{#isAnimated}}Motion-enhanced component{{/isAnimated}}{{#isMobile}}Touch-optimized component{{/isMobile}}{{^isCNC}}{{^isAnimated}}{{^isMobile}}{{componentType}} component{{/isMobile}}{{/isAnimated}}{{/isCNC}}
+ */
+
+import React from 'react';
+{{#includeStyles}}
+import styles from './{{componentName}}.module.css';
+{{/includeStyles}}
+{{#isAnimated}}
+import { motion } from 'framer-motion';
+{{/isAnimated}}
+{{#isCNC}}
+import { cn } from '@whttlr/ui-theme';
+{{/isCNC}}
+
+export interface {{componentName}}Props {
+  /**
+   * Additional CSS classes
+   */
+  className?: string;
+  
+  /**
+   * Children elements
+   */
+  children?: React.ReactNode;
+  
+  {{#isCNC}}
+  /**
+   * Component variant for CNC interfaces
+   */
+  variant?: 'default' | 'warning' | 'danger' | 'success';
+  
+  /**
+   * Whether the component is disabled
+   */
+  disabled?: boolean;
+  
+  /**
+   * Size of the component
+   */
+  size?: 'sm' | 'md' | 'lg';
+  {{/isCNC}}
+  
+  {{#isMobile}}
+  /**
+   * Whether touch interactions are enabled
+   */
+  touchEnabled?: boolean;
+  
+  /**
+   * Touch event handlers
+   */
+  onTouchStart?: (event: TouchEvent) => void;
+  onTouchEnd?: (event: TouchEvent) => void;
+  {{/isMobile}}
+  
+  {{#isAnimated}}
+  /**
+   * Animation variant
+   */
+  animate?: boolean;
+  
+  /**
+   * Animation duration in seconds
+   */
+  duration?: number;
+  {{/isAnimated}}
+}
+
+{{#isAnimated}}
+const animationVariants = {
+  hidden: { opacity: 0, scale: 0.95 },
+  visible: { opacity: 1, scale: 1 },
+};
+{{/isAnimated}}
+
+export const {{componentName}} = React.forwardRef<
+  HTMLDivElement,
+  {{componentName}}Props
+>(({
+  className,
+  children,
+  {{#isCNC}}
+  variant = 'default',
+  disabled = false,
+  size = 'md',
+  {{/isCNC}}
+  {{#isMobile}}
+  touchEnabled = true,
+  onTouchStart,
+  onTouchEnd,
+  {{/isMobile}}
+  {{#isAnimated}}
+  animate = true,
+  duration = 0.3,
+  {{/isAnimated}}
+  ...props
+}, ref) => {
+  {{#isMobile}}
+  const handleTouchStart = (event: React.TouchEvent) => {
+    if (touchEnabled && onTouchStart) {
+      onTouchStart(event.nativeEvent);
+    }
+  };
+  
+  const handleTouchEnd = (event: React.TouchEvent) => {
+    if (touchEnabled && onTouchEnd) {
+      onTouchEnd(event.nativeEvent);
+    }
+  };
+  {{/isMobile}}
+  
+  {{#isCNC}}
+  const componentClasses = cn(
+    '{{componentName}}',
+    `{{componentName}}--${variant}`,
+    `{{componentName}}--${size}`,
+    {
+      '{{componentName}}--disabled': disabled,
+    },
+    {{#includeStyles}}
+    styles.{{componentName}},
+    styles[`{{componentName}}--${variant}`],
+    styles[`{{componentName}}--${size}`],
+    disabled && styles[`{{componentName}}--disabled`],
+    {{/includeStyles}}
+    className
+  );
+  {{/isCNC}}
+  {{^isCNC}}
+  const componentClasses = [
+    '{{componentName}}',
+    {{#includeStyles}}
+    styles.{{componentName}},
+    {{/includeStyles}}
+    className,
+  ].filter(Boolean).join(' ');
+  {{/isCNC}}
+  
+  {{#isAnimated}}
+  const MotionComponent = motion.div;
+  {{/isAnimated}}
+  {{^isAnimated}}
+  const Component = 'div';
+  {{/isAnimated}}
+  
+  return (
+    {{#isAnimated}}
+    <MotionComponent
+      ref={ref}
+      className={componentClasses}
+      variants={animationVariants}
+      initial={animate ? "hidden" : false}
+      animate={animate ? "visible" : false}
+      transition={{ duration }}
+      {{#isMobile}}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      {{/isMobile}}
+      {...props}
+    >
+      {children}
+    </MotionComponent>
+    {{/isAnimated}}
+    {{^isAnimated}}
+    <Component
+      ref={ref}
+      className={componentClasses}
+      {{#isMobile}}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      {{/isMobile}}
+      {...props}
+    >
+      {children}
+    </Component>
+    {{/isAnimated}}
+  );
+});
+
+{{componentName}}.displayName = '{{componentName}}';
+
+export default {{componentName}};

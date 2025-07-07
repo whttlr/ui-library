@@ -1,0 +1,302 @@
+/**
+ * {{componentName}} Component Stories
+ */
+
+import type { Meta, StoryObj } from '@storybook/react';
+import { {{componentName}} } from './{{componentName}}';
+
+const meta: Meta<typeof {{componentName}}> = {
+  title: '{{storyPath}}/{{componentName}}',
+  component: {{componentName}},
+  parameters: {
+    layout: 'centered',
+    docs: {
+      description: {
+        component: '{{#isCNC}}Industrial CNC control component for {{componentName}}.{{/isCNC}}{{#isAnimated}}Motion-enhanced {{componentName}} component with smooth animations.{{/isAnimated}}{{#isMobile}}Touch-optimized {{componentName}} component for mobile interfaces.{{/isMobile}}{{^isCNC}}{{^isAnimated}}{{^isMobile}}{{componentName}} component for the UI library.{{/isMobile}}{{/isAnimated}}{{/isCNC}}',
+      },
+    },
+  },
+  tags: ['autodocs'],
+  argTypes: {
+    className: {
+      control: 'text',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      control: 'text',
+      description: 'Children elements',
+    },
+    {{#isCNC}}
+    variant: {
+      control: 'select',
+      options: ['default', 'warning', 'danger', 'success'],
+      description: 'Component variant for CNC interfaces',
+    },
+    disabled: {
+      control: 'boolean',
+      description: 'Whether the component is disabled',
+    },
+    size: {
+      control: 'select',
+      options: ['sm', 'md', 'lg'],
+      description: 'Size of the component',
+    },
+    {{/isCNC}}
+    {{#isMobile}}
+    touchEnabled: {
+      control: 'boolean',
+      description: 'Whether touch interactions are enabled',
+    },
+    onTouchStart: {
+      action: 'touchStart',
+      description: 'Touch start handler',
+    },
+    onTouchEnd: {
+      action: 'touchEnd',
+      description: 'Touch end handler',
+    },
+    {{/isMobile}}
+    {{#isAnimated}}
+    animate: {
+      control: 'boolean',
+      description: 'Whether animations are enabled',
+    },
+    duration: {
+      control: { type: 'range', min: 0.1, max: 2, step: 0.1 },
+      description: 'Animation duration in seconds',
+    },
+    {{/isAnimated}}
+  },
+};
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
+  args: {
+    children: '{{componentName}} Content',
+  },
+};
+
+{{#isCNC}}
+export const Variants: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+      <{{componentName}} variant="default">Default</{{componentName}}>
+      <{{componentName}} variant="warning">Warning</{{componentName}}>
+      <{{componentName}} variant="danger">Danger</{{componentName}}>
+      <{{componentName}} variant="success">Success</{{componentName}}>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Different variants for CNC interface contexts.',
+      },
+    },
+  },
+};
+
+export const Sizes: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+      <{{componentName}} size="sm">Small</{{componentName}}>
+      <{{componentName}} size="md">Medium</{{componentName}}>
+      <{{componentName}} size="lg">Large</{{componentName}}>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Available component sizes.',
+      },
+    },
+  },
+};
+
+export const States: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+      <{{componentName}}>Normal</{{componentName}}>
+      <{{componentName}} disabled>Disabled</{{componentName}}>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Component states: normal and disabled.',
+      },
+    },
+  },
+};
+
+export const IndustrialContext: Story = {
+  render: () => (
+    <div style={{ 
+      background: '#1a1a1a', 
+      padding: '2rem', 
+      borderRadius: '8px',
+      display: 'grid',
+      gridTemplateColumns: 'repeat(2, 1fr)',
+      gap: '1rem'
+    }}>
+      <{{componentName}} variant="success" size="lg">
+        Machine Running
+      </{{componentName}}>
+      <{{componentName}} variant="warning" size="lg">
+        Maintenance Due
+      </{{componentName}}>
+      <{{componentName}} variant="danger" size="lg">
+        Emergency Stop
+      </{{componentName}}>
+      <{{componentName}} variant="default" size="lg">
+        System Ready
+      </{{componentName}}>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Example usage in an industrial CNC control interface.',
+      },
+    },
+  },
+};
+{{/isCNC}}
+
+{{#isMobile}}
+export const TouchInteractions: Story = {
+  args: {
+    touchEnabled: true,
+    children: 'Touch Me',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Component with touch interactions enabled. Try tapping on mobile devices.',
+      },
+    },
+  },
+};
+
+export const MobileViewports: Story = {
+  render: () => (
+    <div style={{ 
+      display: 'grid', 
+      gap: '1rem',
+      gridTemplateColumns: '1fr',
+      maxWidth: '320px'
+    }}>
+      <{{componentName}} touchEnabled>
+        Mobile Optimized
+      </{{componentName}}>
+      <{{componentName}} touchEnabled>
+        Touch Friendly
+      </{{componentName}}>
+    </div>
+  ),
+  parameters: {
+    viewport: {
+      defaultViewport: 'iphone6',
+    },
+    docs: {
+      description: {
+        story: 'Component optimized for mobile viewports and touch interactions.',
+      },
+    },
+  },
+};
+{{/isMobile}}
+
+{{#isAnimated}}
+export const AnimationVariants: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+      <{{componentName}} animate={true} duration={0.3}>
+        Fast Animation
+      </{{componentName}}>
+      <{{componentName}} animate={true} duration={0.8}>
+        Slow Animation
+      </{{componentName}}>
+      <{{componentName}} animate={false}>
+        No Animation
+      </{{componentName}}>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Different animation configurations.',
+      },
+    },
+  },
+};
+
+export const InteractiveAnimation: Story = {
+  render: () => {
+    const [isVisible, setIsVisible] = React.useState(true);
+    
+    return (
+      <div style={{ textAlign: 'center' }}>
+        <button 
+          onClick={() => setIsVisible(!isVisible)}
+          style={{ marginBottom: '1rem', padding: '0.5rem 1rem' }}
+        >
+          Toggle Visibility
+        </button>
+        {isVisible && (
+          <{{componentName}} animate duration={0.5}>
+            Animated {{componentName}}
+          </{{componentName}}>
+        )}
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Interactive example showing enter/exit animations.',
+      },
+    },
+  },
+};
+{{/isAnimated}}
+
+export const WithCustomStyling: Story = {
+  args: {
+    className: 'custom-{{componentName}}',
+    children: 'Custom Styled',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Component with custom CSS classes applied.',
+      },
+    },
+  },
+};
+
+export const Playground: Story = {
+  args: {
+    children: 'Playground Content',
+    {{#isCNC}}
+    variant: 'default',
+    size: 'md',
+    disabled: false,
+    {{/isCNC}}
+    {{#isMobile}}
+    touchEnabled: true,
+    {{/isMobile}}
+    {{#isAnimated}}
+    animate: true,
+    duration: 0.3,
+    {{/isAnimated}}
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Interactive playground for testing different prop combinations.',
+      },
+    },
+  },
+};

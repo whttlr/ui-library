@@ -1,0 +1,225 @@
+import type { Meta, StoryObj } from '@storybook/react';
+import { LineChart, AreaChart, BarChart, PieChart, MetricCard } from '@whttlr/ui-core';
+
+// Sample data for charts
+const timeSeriesData = [
+  { time: '00:00', value: 120, target: 100 },
+  { time: '01:00', value: 132, target: 100 },
+  { time: '02:00', value: 101, target: 100 },
+  { time: '03:00', value: 134, target: 100 },
+  { time: '04:00', value: 90, target: 100 },
+  { time: '05:00', value: 230, target: 100 },
+  { time: '06:00', value: 210, target: 100 },
+];
+
+const categoryData = [
+  { name: 'Jan', value: 400 },
+  { name: 'Feb', value: 300 },
+  { name: 'Mar', value: 200 },
+  { name: 'Apr', value: 278 },
+  { name: 'May', value: 189 },
+  { name: 'Jun', value: 239 },
+];
+
+const pieData = [
+  { name: 'Complete', value: 400, color: '#10b981' },
+  { name: 'In Progress', value: 300, color: '#3b82f6' },
+  { name: 'Failed', value: 100, color: '#ef4444' },
+  { name: 'Pending', value: 200, color: '#f59e0b' },
+];
+
+const meta: Meta = {
+  title: 'Core/Complex/Charts',
+  parameters: {
+    layout: 'centered',
+    docs: {
+      description: {
+        component: 'Chart components for data visualization with real-time updates and CNC-specific configurations.',
+      },
+    },
+  },
+  tags: ['autodocs'],
+};
+
+export default meta;
+
+export const LineChartStory: StoryObj = {
+  name: 'Line Chart',
+  render: () => (
+    <div style={{ width: '600px', height: '400px' }}>
+      <LineChart
+        data={timeSeriesData}
+        xKey="time"
+        yKey="value"
+        title="Machine Performance Over Time"
+        showGrid
+        showTooltip
+      />
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Line chart for displaying continuous data over time, ideal for machine performance metrics.',
+      },
+    },
+  },
+};
+
+export const AreaChartStory: StoryObj = {
+  name: 'Area Chart',
+  render: () => (
+    <div style={{ width: '600px', height: '400px' }}>
+      <AreaChart
+        data={timeSeriesData}
+        xKey="time"
+        yKey="value"
+        title="Resource Utilization"
+        fill="#3b82f6"
+        showGrid
+        showTooltip
+      />
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Area chart for showing data volume over time with filled areas.',
+      },
+    },
+  },
+};
+
+export const BarChartStory: StoryObj = {
+  name: 'Bar Chart',
+  render: () => (
+    <div style={{ width: '600px', height: '400px' }}>
+      <BarChart
+        data={categoryData}
+        xKey="name"
+        yKey="value"
+        title="Monthly Production"
+        fill="#10b981"
+        showGrid
+        showTooltip
+      />
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Bar chart for comparing categorical data, perfect for production metrics.',
+      },
+    },
+  },
+};
+
+export const PieChartStory: StoryObj = {
+  name: 'Pie Chart',
+  render: () => (
+    <div style={{ width: '400px', height: '400px' }}>
+      <PieChart
+        data={pieData}
+        nameKey="name"
+        valueKey="value"
+        title="Job Status Distribution"
+        showTooltip
+      />
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Pie chart for showing proportional data distribution.',
+      },
+    },
+  },
+};
+
+export const MetricCardStory: StoryObj = {
+  name: 'Metric Card',
+  render: () => (
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem', width: '600px' }}>
+      <MetricCard
+        title="Total Jobs"
+        value="1,234"
+        change={12.5}
+        trend="up"
+        icon="📊"
+      />
+      <MetricCard
+        title="Success Rate"
+        value="98.5%"
+        change={-0.5}
+        trend="down"
+        icon="✅"
+      />
+      <MetricCard
+        title="Average Time"
+        value="45m"
+        change={5.2}
+        trend="up"
+        icon="⏱️"
+      />
+      <MetricCard
+        title="Efficiency"
+        value="87%"
+        change={0}
+        trend="neutral"
+        icon="⚡"
+      />
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Metric cards for displaying key performance indicators with trend information.',
+      },
+    },
+  },
+};
+
+export const RealTimeChart: StoryObj = {
+  name: 'Real-time Chart',
+  render: () => {
+    const [data, setData] = React.useState(timeSeriesData);
+    
+    React.useEffect(() => {
+      const interval = setInterval(() => {
+        setData(prevData => {
+          const newData = [...prevData];
+          newData.shift();
+          newData.push({
+            time: new Date().toLocaleTimeString(),
+            value: Math.floor(Math.random() * 200) + 50,
+            target: 100,
+          });
+          return newData;
+        });
+      }, 2000);
+      
+      return () => clearInterval(interval);
+    }, []);
+    
+    return (
+      <div style={{ width: '600px', height: '400px' }}>
+        <LineChart
+          data={data}
+          xKey="time"
+          yKey="value"
+          title="Real-time Machine Data"
+          showGrid
+          showTooltip
+          animate
+        />
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Example of a real-time updating chart with animation.',
+      },
+    },
+  },
+};

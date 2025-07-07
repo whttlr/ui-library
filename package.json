@@ -1,0 +1,96 @@
+{
+  "name": "@whttlr/ui-library",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Comprehensive UI component library for CNC and industrial applications",
+  "author": "Whttlr Team",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*",
+    ".storybook"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel",
+    "test": "turbo run test",
+    "test:watch": "turbo run test:watch",
+    "lint": "turbo run lint",
+    "lint:fix": "turbo run lint:fix",
+    "clean": "turbo run clean",
+    "storybook": "storybook dev -p 6006",
+    "storybook:build": "storybook build --config-dir .storybook",
+    "storybook:serve": "npx http-server storybook-static",
+    "changeset": "changeset",
+    "changeset:version": "changeset version",
+    "changeset:publish": "changeset publish",
+    "setup": "npm install && npm run build",
+    "build-storybook": "storybook build"
+  },
+  "devDependencies": {
+    "@changesets/changelog-github": "^0.4.8",
+    "@changesets/cli": "^2.26.2",
+    "@rollup/plugin-commonjs": "^25.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.0",
+    "@rollup/plugin-typescript": "^11.0.0",
+    "@storybook/addon-essentials": "8.6.14",
+    "@storybook/react": "^8.6.14",
+    "@storybook/react-vite": "^8.6.14",
+    "@tailwindcss/nesting": "0.0.0-insiders.565cd3e",
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-react": "^7.33.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "lucide-react": "^0.263.1",
+    "postcss": "^8.5.6",
+    "postcss-import": "^16.1.1",
+    "prettier": "^3.0.0",
+    "rollup": "^3.0.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.2",
+    "storybook": "^8.6.14",
+    "tailwindcss": "^4.1.11",
+    "turbo": "^1.10.0",
+    "typescript": "^5.0.0",
+    "vite": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/whttlr/ui-library.git"
+  },
+  "bugs": {
+    "url": "https://github.com/whttlr/ui-library/issues"
+  },
+  "homepage": "https://ui.whttlr.com",
+  "keywords": [
+    "react",
+    "typescript",
+    "ui-library",
+    "components",
+    "cnc",
+    "industrial",
+    "manufacturing",
+    "storybook",
+    "accessibility",
+    "design-system"
+  ],
+  "dependencies": {
+    "@radix-ui/react-slot": "^1.2.3",
+    "antd": "^5.26.3",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwind-merge": "^2.6.0"
+  }
+}

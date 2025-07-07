@@ -1,0 +1,35 @@
+{
+  "name": "@whttlr/storybook",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "storybook build",
+    "dev": "storybook dev -p 6006",
+    "start": "storybook dev -p 6006",
+    "preview": "serve storybook-static"
+  },
+  "dependencies": {
+    "@whttlr/ui-core": "workspace:*",
+    "@whttlr/ui-theme": "workspace:*",
+    "@whttlr/ui-adapters": "workspace:*",
+    "@whttlr/ui-cnc": "workspace:*",
+    "@whttlr/ui-testing": "workspace:*",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@storybook/addon-essentials": "^7.0.0",
+    "@storybook/addon-interactions": "^7.0.0",
+    "@storybook/addon-links": "^7.0.0",
+    "@storybook/addon-docs": "^7.0.0",
+    "@storybook/addon-controls": "^7.0.0",
+    "@storybook/addon-viewport": "^7.0.0",
+    "@storybook/addon-actions": "^7.0.0",
+    "@storybook/addon-a11y": "^7.0.0",
+    "@storybook/react": "^7.0.0",
+    "@storybook/react-vite": "^7.0.0",
+    "@storybook/testing-library": "^0.2.0",
+    "storybook": "^7.0.0",
+    "vite": "^4.3.0"
+  }
+}

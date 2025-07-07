@@ -1,0 +1,24 @@
+{
+  "name": "@whttlr/ui-theme",
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Design system and theme tokens for Whttlr applications",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "test": "jest",
+    "lint": "eslint src/**/*.{ts,tsx}",
+    "clean": "rimraf dist"
+  },
+  "dependencies": {
+    "clsx": "^2.0.0",
+    "tailwind-merge": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "latest"
+  }
+}

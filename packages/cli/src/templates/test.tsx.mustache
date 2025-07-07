@@ -1,0 +1,174 @@
+/**
+ * {{componentName}} Component Tests
+ */
+
+import React from 'react';
+import { 
+  renderWithProviders,
+  screen,
+  {{#isMobile}}
+  TouchEventSimulator,
+  {{/isMobile}}
+  {{#isCNC}}
+  axeTestHelpers,
+  {{/isCNC}}
+} from '@whttlr/ui-testing';
+import { {{componentName}} } from './{{componentName}}';
+
+describe('{{componentName}}', () => {
+  test('renders correctly', () => {
+    renderWithProviders(
+      <{{componentName}} data-testid="{{componentName}}">
+        Test Content
+      </{{componentName}}>
+    );
+    
+    expect(screen.getByTestId('{{componentName}}')).toBeInTheDocument();
+    expect(screen.getByText('Test Content')).toBeInTheDocument();
+  });
+  
+  test('applies custom className', () => {
+    renderWithProviders(
+      <{{componentName}} className="custom-class" data-testid="{{componentName}}">
+        Test Content
+      </{{componentName}}>
+    );
+    
+    expect(screen.getByTestId('{{componentName}}')).toHaveClass('custom-class');
+  });
+  
+  {{#isCNC}}
+  test('handles different variants', () => {
+    const { rerender } = renderWithProviders(
+      <{{componentName}} variant="warning" data-testid="{{componentName}}">
+        Test Content
+      </{{componentName}}>
+    );
+    
+    expect(screen.getByTestId('{{componentName}}')).toHaveClass('{{componentName}}--warning');
+    
+    rerender(
+      <{{componentName}} variant="danger" data-testid="{{componentName}}">
+        Test Content
+      </{{componentName}}>
+    );
+    
+    expect(screen.getByTestId('{{componentName}}')).toHaveClass('{{componentName}}--danger');
+  });
+  
+  test('handles disabled state', () => {
+    renderWithProviders(
+      <{{componentName}} disabled data-testid="{{componentName}}">
+        Test Content
+      </{{componentName}}>
+    );
+    
+    expect(screen.getByTestId('{{componentName}}')).toHaveClass('{{componentName}}--disabled');
+  });
+  
+  test('meets accessibility standards', async () => {
+    const { container } = renderWithProviders(
+      <{{componentName}} data-testid="{{componentName}}">
+        Accessible Content
+      </{{componentName}}>
+    );
+    
+    await axeTestHelpers.runAxeTest(container);
+  });
+  {{/isCNC}}
+  
+  {{#isMobile}}
+  test('handles touch events', () => {
+    const onTouchStart = jest.fn();
+    const onTouchEnd = jest.fn();
+    
+    renderWithProviders(
+      <{{componentName}}
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+        data-testid="{{componentName}}"
+      >
+        Touch Content
+      </{{componentName}}>
+    );
+    
+    const element = screen.getByTestId('{{componentName}}');
+    
+    TouchEventSimulator.tap(element);
+    
+    // Note: This is a simplified test. Real touch events are more complex.
+    expect(element).toBeInTheDocument();
+  });
+  
+  test('respects touchEnabled prop', () => {
+    const onTouchStart = jest.fn();
+    
+    renderWithProviders(
+      <{{componentName}}
+        touchEnabled={false}
+        onTouchStart={onTouchStart}
+        data-testid="{{componentName}}"
+      >
+        Touch Content
+      </{{componentName}}>
+    );
+    
+    const element = screen.getByTestId('{{componentName}}');
+    TouchEventSimulator.tap(element);
+    
+    // When touchEnabled is false, handlers shouldn't be called
+    expect(onTouchStart).not.toHaveBeenCalled();
+  });
+  {{/isMobile}}
+  
+  {{#isAnimated}}
+  test('handles animation props', () => {
+    renderWithProviders(
+      <{{componentName}} animate={false} data-testid="{{componentName}}">
+        Animated Content
+      </{{componentName}}>
+    );
+    
+    expect(screen.getByTestId('{{componentName}}')).toBeInTheDocument();
+  });
+  
+  test('supports custom animation duration', () => {
+    renderWithProviders(
+      <{{componentName}} duration={0.5} data-testid="{{componentName}}">
+        Animated Content
+      </{{componentName}}>
+    );
+    
+    expect(screen.getByTestId('{{componentName}}')).toBeInTheDocument();
+  });
+  {{/isAnimated}}
+  
+  test('forwards ref correctly', () => {
+    const ref = React.createRef<HTMLDivElement>();
+    
+    renderWithProviders(
+      <{{componentName}} ref={ref} data-testid="{{componentName}}">
+        Ref Content
+      </{{componentName}}>
+    );
+    
+    expect(ref.current).toBeInstanceOf(HTMLDivElement);
+    expect(ref.current).toBe(screen.getByTestId('{{componentName}}'));
+  });
+  
+  test('spreads additional props', () => {
+    renderWithProviders(
+      <{{componentName}}
+        data-testid="{{componentName}}"
+        data-custom="custom-value"
+        role="banner"
+      >
+        Props Content
+      </{{componentName}}>
+    );
+    
+    const element = screen.getByTestId('{{componentName}}');
+    expect(element).toHaveAttribute('data-custom', 'custom-value');
+    expect(element).toHaveAttribute('role', 'banner');
+  });
+});

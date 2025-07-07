@@ -1,0 +1,162 @@
+/**
+ * {{componentName}} Component Styles
+ * 
+ * {{#isCNC}}CNC-specific styles for industrial interfaces{{/isCNC}}{{#isAnimated}}Animation-enhanced styles{{/isAnimated}}{{#isMobile}}Mobile-optimized styles{{/isMobile}}{{^isCNC}}{{^isAnimated}}{{^isMobile}}Component styles{{/isMobile}}{{/isAnimated}}{{/isCNC}}
+ */
+
+.{{componentName}} {
+  /* Base styles */
+  display: block;
+  position: relative;
+  {{#isMobile}}
+  
+  /* Mobile-optimized touch targets */
+  min-height: 44px;
+  min-width: 44px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  {{/isMobile}}
+  {{#isAnimated}}
+  
+  /* Animation preparation */
+  transform-origin: center;
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+  {{/isAnimated}}
+  {{#isCNC}}
+  
+  /* CNC industrial design */
+  font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+  border: 1px solid var(--border-color, #374151);
+  border-radius: 4px;
+  background: var(--background-color, #1f2937);
+  color: var(--text-color, #f9fafb);
+  {{/isCNC}}
+}
+
+{{#isCNC}}
+/* CNC Variants */
+.{{componentName}}--default {
+  --background-color: #1f2937;
+  --border-color: #374151;
+  --text-color: #f9fafb;
+}
+
+.{{componentName}}--warning {
+  --background-color: #fef3c7;
+  --border-color: #f59e0b;
+  --text-color: #92400e;
+}
+
+.{{componentName}}--danger {
+  --background-color: #fecaca;
+  --border-color: #ef4444;
+  --text-color: #dc2626;
+}
+
+.{{componentName}}--success {
+  --background-color: #d1fae5;
+  --border-color: #10b981;
+  --text-color: #047857;
+}
+
+/* CNC Sizes */
+.{{componentName}}--sm {
+  padding: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.{{componentName}}--md {
+  padding: 0.75rem;
+  font-size: 1rem;
+}
+
+.{{componentName}}--lg {
+  padding: 1rem;
+  font-size: 1.125rem;
+}
+
+/* CNC States */
+.{{componentName}}--disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+{{/isCNC}}
+
+{{#isMobile}}
+/* Mobile-specific styles */
+@media (hover: none) and (pointer: coarse) {
+  .{{componentName}} {
+    /* Enhanced touch targets */
+    padding: 0.75rem;
+    margin: 0.25rem;
+  }
+  
+  .{{componentName}}:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+}
+
+/* Responsive breakpoints */
+@media (max-width: 640px) {
+  .{{componentName}} {
+    width: 100%;
+    max-width: none;
+  }
+}
+{{/isMobile}}
+
+{{#isAnimated}}
+/* Animation styles */
+.{{componentName}} {
+  transition: all 0.3s ease;
+}
+
+.{{componentName}}:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.{{componentName}}:focus {
+  outline: 2px solid var(--focus-color, #3b82f6);
+  outline-offset: 2px;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .{{componentName}} {
+    transition: none;
+  }
+  
+  .{{componentName}}:hover {
+    transform: none;
+  }
+}
+{{/isAnimated}}
+
+/* Focus styles for accessibility */
+.{{componentName}}:focus-visible {
+  outline: 2px solid var(--focus-color, #3b82f6);
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .{{componentName}} {
+    border-width: 2px;
+    font-weight: 600;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .{{componentName}} {
+    {{^isCNC}}
+    background: #374151;
+    color: #f9fafb;
+    border-color: #6b7280;
+    {{/isCNC}}
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "@whttlr/ui-testing",
+  "version": "0.0.0",
+  "description": "Testing utilities for Whttlr UI components",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "test": "jest",
+    "lint": "eslint src/**/*.{ts,tsx}",
+    "clean": "rimraf dist"
+  },
+  "peerDependencies": {
+    "react": ">=17.0.0",
+    "react-dom": ">=17.0.0",
+    "@testing-library/react": ">=12.0.0",
+    "@testing-library/user-event": ">=14.0.0",
+    "jest": ">=27.0.0"
+  },
+  "dependencies": {
+    "@whttlr/ui-core": "workspace:*",
+    "@whttlr/ui-theme": "workspace:*",
+    "axe-core": "^4.7.0",
+    "react-router-dom": "^6.8.0"
+  },
+  "optionalDependencies": {
+    "html2canvas": "^1.4.1"
+  }
+}

@@ -1,0 +1,227 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Introduction/Welcome" />
+
+# Whttlr UI Library
+
+Welcome to the **Whttlr UI Library** - a comprehensive React/TypeScript component system designed specifically for CNC and industrial applications.
+
+## 🎯 Overview
+
+This library provides a complete set of components for building modern CNC control interfaces, featuring:
+
+- **Multi-Library Adapter System** - Switch between Ant Design, Headless UI, and custom implementations
+- **CNC-Specific Components** - Industrial-grade controls for machine operation
+- **Comprehensive Design System** - Consistent theming and styling
+- **Accessibility First** - WCAG 2.1 AA compliant components
+- **Mobile Optimized** - Touch-friendly interfaces for industrial environments
+
+## 📦 Packages
+
+### Core Packages
+
+- **@whttlr/ui-core** - Foundation components (Button, Card, Badge, Alert, etc.)
+- **@whttlr/ui-theme** - Design system tokens and theming
+- **@whttlr/ui-adapters** - Multi-library adapter system
+- **@whttlr/ui-cnc** - CNC-specific components (JogControls, EmergencyStop, etc.)
+
+### Supporting Packages
+
+- **@whttlr/ui-testing** - Testing utilities and accessibility helpers
+- **@whttlr/ui-icons** - Icon system for industrial applications
+- **@whttlr/ui-cli** - Development tools and component generators
+
+## 🚀 Getting Started
+
+### Installation
+
+```bash
+npm install @whttlr/ui-core @whttlr/ui-theme @whttlr/ui-cnc
+```
+
+### Basic Usage
+
+```tsx
+import { Button, Card, Alert } from '@whttlr/ui-core';
+import { JogControls, EmergencyStop } from '@whttlr/ui-cnc';
+import { ThemeProvider } from '@whttlr/ui-theme';
+
+function App() {
+  return (
+    <ThemeProvider theme="cnc">
+      <Card>
+        <Alert variant="info" title="System Ready">
+          CNC machine is connected and ready for operation.
+        </Alert>
+        
+        <JogControls
+          currentPosition={{ x: 0, y: 0, z: 0 }}
+          isConnected={true}
+          onJog={(axis, direction) => console.log(`Jog ${axis} ${direction}`)}
+        />
+        
+        <EmergencyStop
+          onActivate={() => console.log('Emergency stop activated')}
+        />
+      </Card>
+    </ThemeProvider>
+  );
+}
+```
+
+### Adapter System
+
+Switch between UI libraries seamlessly:
+
+```tsx
+import { ComponentProvider } from '@whttlr/ui-adapters';
+import { Button } from '@whttlr/ui-adapters';
+
+function App() {
+  return (
+    <ComponentProvider adapter="ant-design">
+      <Button>Ant Design Button</Button>
+    </ComponentProvider>
+  );
+}
+
+// Switch to Headless UI
+function App() {
+  return (
+    <ComponentProvider adapter="headless-ui">
+      <Button>Headless UI Button</Button>
+    </ComponentProvider>
+  );
+}
+```
+
+## 🎨 Design System
+
+### Themes
+
+- **Light Theme** - Standard light interface
+- **Dark Theme** - Modern dark interface  
+- **CNC Theme** - Industrial dark theme optimized for manufacturing environments
+
+### Color Tokens
+
+The design system includes semantic color tokens:
+
+- **Primary** - Main brand colors
+- **Secondary** - Supporting colors
+- **Success** - Positive actions and states
+- **Warning** - Caution and alerts
+- **Error** - Destructive actions and errors
+- **Info** - Informational content
+
+### CNC-Specific Colors
+
+- **Emergency** - High-visibility red for emergency stops
+- **Machine Ready** - Green for operational states
+- **Connection** - Blue for connectivity status
+
+## 🏭 CNC Components
+
+### Machine Controls
+
+- **JogControls** - Manual positioning with X/Y/Z axes
+- **CoordinateDisplay** - Real-time position tracking
+- **EmergencyStop** - Safety-critical stop functionality
+- **ConnectionStatus** - Machine connectivity indicator
+
+### Status & Monitoring
+
+- **MachineStatusMonitor** - Overall machine state
+- **StatusIndicators** - Visual status indicators
+- **ProgressIndicators** - Operation progress tracking
+
+### Visualization
+
+- **WorkingAreaPreview** - 3D workspace visualization
+- **MachineDisplay2D** - Top-down coordinate view
+- **ToolPath** - G-code path visualization
+
+## 📱 Mobile Support
+
+All components are optimized for mobile and tablet use:
+
+- **Touch-Friendly** - Large touch targets for industrial environments
+- **Responsive** - Adapts to different screen sizes
+- **Gesture Support** - Swipe and pinch gestures where appropriate
+- **Orientation Aware** - Optimized for both portrait and landscape
+
+## ♿ Accessibility
+
+Comprehensive accessibility support:
+
+- **WCAG 2.1 AA Compliant** - Meets international accessibility standards
+- **Keyboard Navigation** - Full keyboard support
+- **Screen Reader** - Proper ARIA labels and descriptions
+- **Focus Management** - Logical focus order and visible indicators
+- **Color Contrast** - Sufficient contrast ratios for industrial lighting
+
+## 🧪 Testing
+
+Built-in testing utilities:
+
+- **Component Testing** - React Testing Library integration
+- **Accessibility Testing** - Automated a11y auditing
+- **Visual Regression** - Screenshot comparison testing
+- **Mobile Testing** - Touch event simulation
+- **Performance Testing** - Component performance monitoring
+
+## 📖 Documentation
+
+Each component includes:
+
+- **Interactive Examples** - Live component demonstrations
+- **Props Documentation** - Complete API reference
+- **Accessibility Notes** - WCAG compliance information
+- **Usage Guidelines** - Best practices and patterns
+- **Code Examples** - Copy-paste ready snippets
+
+## 🔧 Development
+
+### CLI Tools
+
+Generate new components:
+
+```bash
+npx @whttlr/ui-cli generate component MyComponent
+```
+
+Customize themes:
+
+```bash
+npx @whttlr/ui-cli theme customize
+```
+
+### Building
+
+```bash
+# Build all packages
+npm run build
+
+# Start development
+npm run dev
+
+# Run Storybook
+npm run storybook
+```
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our contributing guidelines for:
+
+- Component development standards
+- Testing requirements
+- Accessibility guidelines
+- Documentation standards
+
+## 📄 License
+
+MIT License - see LICENSE file for details.
+
+---
+
+**Happy building with Whttlr UI Library! 🏭⚡**

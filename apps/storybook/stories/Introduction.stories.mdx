@@ -1,0 +1,61 @@
+# Whttlr UI Library
+
+Welcome to the Whttlr UI Library documentation. This is a comprehensive React component library designed for industrial CNC control interfaces and general-purpose applications.
+
+## Features
+
+- **🎨 Theme System**: Built-in light/dark themes with design tokens
+- **📱 Responsive Design**: Mobile-first components with touch optimization
+- **♿ Accessibility**: WCAG 2.1 AA compliant with full keyboard navigation
+- **🔧 Adapter System**: Support for multiple UI libraries (Ant Design, Headless UI, Custom)
+- **🏭 CNC-Specific**: Specialized components for industrial control interfaces
+- **🧪 Testing**: Comprehensive testing utilities included
+- **📊 Charts**: Built-in charting components with real-time data support
+
+## Packages
+
+### @whttlr/ui-core
+Core UI components including primitives, complex components, and animated elements.
+
+### @whttlr/ui-theme
+Design system with tokens, themes, and styling utilities.
+
+### @whttlr/ui-adapters
+Multi-library adapter system for component flexibility.
+
+### @whttlr/ui-cnc
+CNC-specific components for industrial interfaces.
+
+### @whttlr/ui-testing
+Testing utilities for component development.
+
+## Getting Started
+
+```bash
+npm install @whttlr/ui-core @whttlr/ui-theme
+```
+
+```jsx
+import { Button } from '@whttlr/ui-core';
+import { ThemeProvider } from '@whttlr/ui-theme';
+
+function App() {
+  return (
+    <ThemeProvider theme="dark">
+      <Button variant="primary">Hello World</Button>
+    </ThemeProvider>
+  );
+}
+```
+
+## Architecture
+
+The library is built with a modular architecture that allows you to use only what you need:
+
+- **Primitives**: Basic building blocks (Button, Card, Input)
+- **Complex**: Advanced components (DataTable, Charts, Navigation)
+- **Animated**: Motion-enhanced components
+- **Mobile**: Touch-optimized components
+- **CNC**: Industrial control components
+
+Browse the stories to explore all available components and their configurations.
