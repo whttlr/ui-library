@@ -1,0 +1,26 @@
+{
+  "name": "@whttlr/ui-library-mcp",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "MCP server for Whttlr UI Library component management",
+  "main": "server.js",
+  "bin": {
+    "whttlr-ui-mcp": "./server.js"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^0.6.0"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "ui-library",
+    "components",
+    "whttlr"
+  ],
+  "author": "Whttlr Team",
+  "license": "MIT"
+}

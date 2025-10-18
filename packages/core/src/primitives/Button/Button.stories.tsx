@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import React, { useState } from 'react';
 import { Button } from './Button';
 import { Settings, Download, Trash2, Play, Pause, Power } from 'lucide-react';
 
@@ -326,6 +327,194 @@ export const AllSizes: Story = {
     docs: {
       description: {
         story: 'All available button sizes displayed together',
+      },
+    },
+  },
+};
+
+// Interactive event handling example
+export const InteractiveExample: Story = {
+  render: () => {
+    const [clickCount, setClickCount] = useState(0);
+    const [isLoading, setIsLoading] = useState(false);
+    const [lastEvent, setLastEvent] = useState<string>('None');
+    
+    const handleAsyncClick = async () => {
+      setIsLoading(true);
+      setLastEvent('onClick (async)');
+      // Simulate async operation
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      setClickCount(prev => prev + 1);
+      setIsLoading(false);
+    };
+    
+    return (
+      <div style={{ 
+        padding: '2rem', 
+        backgroundColor: 'hsl(240, 10%, 8%)', 
+        borderRadius: '8px',
+        maxWidth: '600px',
+        margin: '0 auto'
+      }}>
+        <h3 style={{ 
+          color: 'hsl(0, 0%, 98%)', 
+          marginBottom: '1.5rem',
+          fontSize: '1.25rem',
+          fontWeight: 600
+        }}>
+          Interactive Button Event Examples
+        </h3>
+        
+        <div style={{ 
+          display: 'grid', 
+          gap: '1rem',
+          marginBottom: '1.5rem'
+        }}>
+          {/* Basic Click Handler */}
+          <div style={{ 
+            padding: '1rem', 
+            backgroundColor: 'hsl(240, 10%, 12%)', 
+            borderRadius: '6px' 
+          }}>
+            <p style={{ 
+              color: 'hsl(240, 5%, 64.9%)', 
+              fontSize: '0.875rem', 
+              marginBottom: '0.5rem' 
+            }}>
+              Basic onClick handler:
+            </p>
+            <Button 
+              onClick={() => {
+                setClickCount(prev => prev + 1);
+                setLastEvent('onClick');
+              }}
+            >
+              Click me! (Count: {clickCount})
+            </Button>
+          </div>
+          
+          {/* Async Handler with Loading */}
+          <div style={{ 
+            padding: '1rem', 
+            backgroundColor: 'hsl(240, 10%, 12%)', 
+            borderRadius: '6px' 
+          }}>
+            <p style={{ 
+              color: 'hsl(240, 5%, 64.9%)', 
+              fontSize: '0.875rem', 
+              marginBottom: '0.5rem' 
+            }}>
+              Async handler with loading state:
+            </p>
+            <Button 
+              onClick={handleAsyncClick}
+              loading={isLoading}
+              loadingText="Processing..."
+              variant="success"
+            >
+              Start Process
+            </Button>
+          </div>
+          
+          {/* Mouse Events */}
+          <div style={{ 
+            padding: '1rem', 
+            backgroundColor: 'hsl(240, 10%, 12%)', 
+            borderRadius: '6px' 
+          }}>
+            <p style={{ 
+              color: 'hsl(240, 5%, 64.9%)', 
+              fontSize: '0.875rem', 
+              marginBottom: '0.5rem' 
+            }}>
+              Mouse events (hover, down, up):
+            </p>
+            <Button 
+              onMouseEnter={() => setLastEvent('onMouseEnter')}
+              onMouseLeave={() => setLastEvent('onMouseLeave')}
+              onMouseDown={() => setLastEvent('onMouseDown')}
+              onMouseUp={() => setLastEvent('onMouseUp')}
+              variant="cnc"
+            >
+              Hover or Click Me
+            </Button>
+          </div>
+          
+          {/* Focus Events */}
+          <div style={{ 
+            padding: '1rem', 
+            backgroundColor: 'hsl(240, 10%, 12%)', 
+            borderRadius: '6px' 
+          }}>
+            <p style={{ 
+              color: 'hsl(240, 5%, 64.9%)', 
+              fontSize: '0.875rem', 
+              marginBottom: '0.5rem' 
+            }}>
+              Focus events (tab to focus):
+            </p>
+            <Button 
+              onFocus={() => setLastEvent('onFocus')}
+              onBlur={() => setLastEvent('onBlur')}
+              variant="outline"
+            >
+              Tab to Focus
+            </Button>
+          </div>
+          
+          {/* Keyboard Events */}
+          <div style={{ 
+            padding: '1rem', 
+            backgroundColor: 'hsl(240, 10%, 12%)', 
+            borderRadius: '6px' 
+          }}>
+            <p style={{ 
+              color: 'hsl(240, 5%, 64.9%)', 
+              fontSize: '0.875rem', 
+              marginBottom: '0.5rem' 
+            }}>
+              Keyboard events (focus and press any key):
+            </p>
+            <Button 
+              onKeyDown={(e) => setLastEvent(`onKeyDown: ${e.key}`)}
+              onKeyUp={(e) => setLastEvent(`onKeyUp: ${e.key}`)}
+              variant="secondary"
+            >
+              Press Any Key
+            </Button>
+          </div>
+        </div>
+        
+        {/* Event Status Display */}
+        <div style={{ 
+          padding: '1rem', 
+          backgroundColor: 'hsl(240, 10%, 12%)', 
+          borderRadius: '6px',
+          borderLeft: '4px solid hsl(262, 83%, 58%)'
+        }}>
+          <p style={{ 
+            color: 'hsl(240, 5%, 64.9%)', 
+            fontSize: '0.875rem', 
+            marginBottom: '0.25rem' 
+          }}>
+            Last Event:
+          </p>
+          <p style={{ 
+            color: 'hsl(0, 0%, 98%)', 
+            fontSize: '1rem',
+            fontFamily: 'JetBrains Mono, monospace',
+            fontWeight: 600
+          }}>
+            {lastEvent}
+          </p>
+        </div>
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Interactive demonstration of all Button event handlers including onClick, onMouseDown, onMouseUp, onFocus, onBlur, and keyboard events. This example shows that all HTML button events are properly passed through.',
       },
     },
   },

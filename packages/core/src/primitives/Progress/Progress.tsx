@@ -21,6 +21,7 @@ interface ProgressProps {
   color?: ProgressColor;
   animated?: boolean;
   striped?: boolean;
+  compactThreshold?: number; // Width threshold for compact mode (default: 200px)
 }
 
 export const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
@@ -33,9 +34,45 @@ export const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
     color = 'default',
     animated = false,
     striped = false,
+    compactThreshold = 200,
   }, ref) => {
     const percentage = Math.min(Math.max((value / max) * 100, 0), 100);
+    const [isCompact, setIsCompact] = React.useState(false);
+    const containerRef = React.useRef<HTMLDivElement>(null);
 
+    // Merge refs to handle both forwarded ref and internal ref
+    const mergedRef = React.useCallback((node: HTMLDivElement | null) => {
+      containerRef.current = node;
+      if (typeof ref === 'function') {
+        ref(node);
+      } else if (ref) {
+        ref.current = node;
+      }
+    }, [ref]);
+
+    // Monitor container width for responsive behavior
+    React.useEffect(() => {
+      const container = containerRef.current;
+      if (!container) return;
+
+      const checkWidth = () => {
+        const width = container.getBoundingClientRect().width;
+        setIsCompact(width < compactThreshold);
+      };
+
+      // Initial check
+      checkWidth();
+
+      const resizeObserver = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+          const width = entry.contentRect.width;
+          setIsCompact(width < compactThreshold);
+        }
+      });
+
+      resizeObserver.observe(container);
+      return () => resizeObserver.disconnect();
+    }, [compactThreshold]);
 
     const containerStyle: React.CSSProperties = {
       width: '100%',
@@ -62,17 +99,26 @@ export const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
       fillStyle.animation = 'progress-bar-stripes 1s linear infinite';
     }
 
+    // Responsive text styles
     const textStyle: React.CSSProperties = {
       display: 'flex',
-      justifyContent: 'space-between',
+      justifyContent: isCompact ? 'center' : 'space-between',
       fontSize: '0.875rem',
       color: tokens.colors.text.secondary,
       marginTop: tokens.spacing.xs,
       fontFamily: tokens.text.family.sans.join(', '),
     };
 
+    const compactTextStyle: React.CSSProperties = {
+      fontSize: '0.75rem',
+      color: tokens.colors.text.secondary,
+      textAlign: 'center',
+      marginTop: tokens.spacing.xs,
+      fontFamily: tokens.text.family.sans.join(', '),
+    };
+
     return (
-      <div ref={ref} style={containerStyle}>
+      <div ref={mergedRef} style={containerStyle}>
         <style>
           {`
             @keyframes progress-bar-stripes {
@@ -89,15 +135,24 @@ export const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
           <div style={fillStyle} />
         </div>
         {showPercentage && (
-          <div style={textStyle}>
-            <span>{Math.round(percentage)}%</span>
-            <span>{value} / {max}</span>
-          </div>
+          isCompact ? (
+            // Compact layout: Show only percentage, centered
+            <div style={compactTextStyle}>
+              {Math.round(percentage)}%
+            </div>
+          ) : (
+            // Normal layout: Show percentage and ratio side by side
+            <div style={textStyle}>
+              <span>{Math.round(percentage)}%</span>
+              <span>{value} / {max}</span>
+            </div>
+          )
         )}
       </div>
     );
   }
 );
+
 Progress.displayName = 'Progress';
 
 interface CircularProgressProps {

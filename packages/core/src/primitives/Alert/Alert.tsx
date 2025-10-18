@@ -294,12 +294,25 @@ const AlertBanner = React.forwardRef<
     <Alert
       ref={ref}
       variant={variantMap[type]}
-      className={cn('flex items-start justify-between gap-3', className)}
+      className={className}
+      showIcon={false}
+      style={{
+        display: 'flex',
+        alignItems: 'flex-start',
+        justifyContent: 'space-between',
+        gap: tokens.spacing.sm,
+        position: 'relative'
+      }}
       {...props}
     >
-      <div className="flex items-start gap-3 flex-1">
-        <span className="text-lg">{iconMap[type]}</span>
-        <div className="flex-1">
+      <div style={{
+        display: 'flex',
+        alignItems: 'flex-start',
+        gap: tokens.spacing.sm,
+        flex: 1
+      }}>
+        <span style={{ fontSize: '1.125rem', lineHeight: 1 }}>{iconMap[type]}</span>
+        <div style={{ flex: 1 }}>
           {title && <AlertTitle>{title}</AlertTitle>}
           <AlertDescription>{message}</AlertDescription>
         </div>
@@ -307,7 +320,33 @@ const AlertBanner = React.forwardRef<
       {onDismiss && (
         <button
           onClick={onDismiss}
-          className="text-foreground/60 hover:text-foreground cursor-pointer p-1 rounded-md hover:bg-foreground/10 transition-colors"
+          style={{
+            background: 'none',
+            border: 'none',
+            color: 'currentColor',
+            opacity: 0.6,
+            cursor: 'pointer',
+            padding: '0.25rem',
+            borderRadius: '4px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '14px',
+            lineHeight: 1,
+            flexShrink: 0,
+            transition: 'all 0.2s ease-in-out',
+            position: 'absolute',
+            top: tokens.spacing.sm,
+            right: tokens.spacing.sm
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.opacity = '1';
+            e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.opacity = '0.6';
+            e.currentTarget.style.backgroundColor = 'transparent';
+          }}
           aria-label="Dismiss alert"
         >
           ✕

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { motion } from 'framer-motion';
 import {
-  RotateCcw, Copy, Lock, Unlock,
+  RotateCcw, Lock, Unlock,
 } from 'lucide-react';
 import { Button, Card, Badge } from '@whttlr/ui-core';
 import {
@@ -36,18 +36,6 @@ export interface CoordinateDisplayProps {
   className?: string
 }
 
-const PrecisionBadge: React.FC<{ precision: 'high' | 'medium' | 'low' }> = ({ precision }) => {
-  const precisionStyles = getCNCPrecisionBadgeStyles(precision);
-
-  return (
-    <Badge 
-      variant="outline" 
-      style={precisionStyles}
-    >
-      {precision.toUpperCase()}
-    </Badge>
-  );
-};
 
 export const CoordinateDisplay: React.FC<CoordinateDisplayProps> = ({
   workPosition,
@@ -82,11 +70,8 @@ export const CoordinateDisplay: React.FC<CoordinateDisplayProps> = ({
     <Card className={cn('overflow-hidden', className)}>
       <div className="border-b border-border bg-muted/50 px-4 py-2">
         <div className="flex items-center justify-between">
+          <h3 className="text-sm font-medium">Position</h3>
           <div className="flex items-center gap-2">
-            <h3 className="text-sm font-medium">Position</h3>
-            <PrecisionBadge precision={precision} />
-          </div>
-          <div className="flex items-center gap-1">
             <Button
               variant={displayMode === 'work' ? 'default' : 'ghost'}
               size="sm"
@@ -103,16 +88,6 @@ export const CoordinateDisplay: React.FC<CoordinateDisplayProps> = ({
             >
               Machine
             </Button>
-            {onCopy && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => onCopy(position, displayMode)}
-                className="h-7 w-7 ml-2"
-              >
-                <Copy className="h-3 w-3" />
-              </Button>
-            )}
           </div>
         </div>
       </div>

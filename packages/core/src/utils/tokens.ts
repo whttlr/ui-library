@@ -5,6 +5,7 @@ import {
   fontSize, 
   fontWeight,
   fontFamily,
+  lineHeight,
   borderRadius,
   transition,
   shadows,
@@ -90,6 +91,7 @@ export const tokens = {
     size: fontSize,
     weight: fontWeight,
     family: fontFamily,
+    lineHeight: lineHeight,
   },
   
   // Layout tokens

@@ -4,6 +4,9 @@ import { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, CardIcon, CardValue, CardChange, CardActions, CardCompound } from './Card';
 import { Button } from '../Button/Button';
 import { Badge } from '../Badge/Badge';
+import { MetricCard } from '../MetricCard/MetricCard';
+import { ActivityItem } from '../ActivityItem/ActivityItem';
+import { StatusCard } from '../StatusCard/StatusCard';
 import { Settings, TrendingUp, Activity, Zap, CheckCircle, AlertCircle, Info as InfoIcon, DollarSign, Users, ShoppingCart, Package, MoreVertical, ChevronRight, BarChart2 } from 'lucide-react';
 import { Slider } from '../Slider/Slider';
 
@@ -152,20 +155,14 @@ export const LargePadding: Story = {
 };
 
 // Compound component examples - NEW API
-export const MetricCard: Story = {
+export const MetricCardExample: Story = {
   render: () => (
-    <Card variant="metric" style={{ width: '280px' }} noPadding>
-      <CardHeader style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-        <div style={{ flex: 1 }}>
-          <CardTitle>Revenue</CardTitle>
-          <CardValue>$45,231</CardValue>
-          <CardChange variant="positive">+20.1% from last month</CardChange>
-        </div>
-        <CardIcon>
-          <DollarSign size={24} />
-        </CardIcon>
-      </CardHeader>
-    </Card>
+    <MetricCard
+      title="Revenue"
+      value="$45,231"
+      change={{ value: "+20.1% from last month", variant: "positive" }}
+      icon={<DollarSign size={24} />}
+    />
   ),
   parameters: {
     docs: {
@@ -179,44 +176,32 @@ export const MetricCard: Story = {
 export const MetricCardVariations: Story = {
   render: () => (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
-      <Card variant="metric" noPadding>
-        <CardHeader style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div style={{ flex: 1 }}>
-            <CardTitle>Total Users</CardTitle>
-            <CardValue>2,543</CardValue>
-            <CardChange variant="positive">+12.5%</CardChange>
-          </div>
-          <CardIcon style={{ backgroundColor: 'hsl(220, 70%, 50% / 0.1)', color: 'hsl(220, 70%, 50%)' }}>
-            <Users size={24} />
-          </CardIcon>
-        </CardHeader>
-      </Card>
+      <MetricCard
+        title="Total Users"
+        value="2,543"
+        change={{ value: "+12.5%", variant: "positive" }}
+        icon={<Users size={24} />}
+        iconColor="hsl(220, 70%, 50%)"
+        iconBackgroundColor="hsl(220, 70%, 50% / 0.1)"
+      />
 
-      <Card variant="metric" noPadding>
-        <CardHeader style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div style={{ flex: 1 }}>
-            <CardTitle>Orders</CardTitle>
-            <CardValue>432</CardValue>
-            <CardChange variant="negative">-5.4%</CardChange>
-          </div>
-          <CardIcon style={{ backgroundColor: 'hsl(30, 70%, 50% / 0.1)', color: 'hsl(30, 70%, 50%)' }}>
-            <ShoppingCart size={24} />
-          </CardIcon>
-        </CardHeader>
-      </Card>
+      <MetricCard
+        title="Orders"
+        value="432"
+        change={{ value: "-5.4%", variant: "negative" }}
+        icon={<ShoppingCart size={24} />}
+        iconColor="hsl(30, 70%, 50%)"
+        iconBackgroundColor="hsl(30, 70%, 50% / 0.1)"
+      />
 
-      <Card variant="metric" noPadding>
-        <CardHeader style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div style={{ flex: 1 }}>
-            <CardTitle>Inventory</CardTitle>
-            <CardValue>1,893</CardValue>
-            <CardChange variant="neutral">No change</CardChange>
-          </div>
-          <CardIcon style={{ backgroundColor: 'hsl(142, 76%, 36% / 0.1)', color: 'hsl(142, 76%, 36%)' }}>
-            <Package size={24} />
-          </CardIcon>
-        </CardHeader>
-      </Card>
+      <MetricCard
+        title="Inventory"
+        value="1,893"
+        change={{ value: "No change", variant: "neutral" }}
+        icon={<Package size={24} />}
+        iconColor="hsl(142, 76%, 36%)"
+        iconBackgroundColor="hsl(142, 76%, 36% / 0.1)"
+      />
     </div>
   ),
   parameters: {
@@ -231,41 +216,13 @@ export const MetricCardVariations: Story = {
 // Legacy example for comparison
 export const DashboardMetricLegacy: Story = {
   render: () => (
-    <Card style={{ width: '12rem', padding: '1rem' }}>
-      <div>
-        <p style={{ 
-          fontSize: '0.75rem', 
-          color: 'hsl(240, 5%, 64.9%)', 
-          margin: '0 0 0.375rem 0',
-          fontWeight: 500,
-          textTransform: 'uppercase',
-          letterSpacing: '0.025em'
-        }}>
-          Machine Uptime
-        </p>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <p style={{ 
-            fontSize: '1.75rem', 
-            fontWeight: 700, 
-            color: 'hsl(142, 76%, 36%)',
-            margin: 0,
-            lineHeight: 1
-          }}>
-            98.5%
-          </p>
-          <div style={{ 
-            padding: '0.25rem', 
-            backgroundColor: 'hsl(142, 76%, 36% / 0.12)', 
-            borderRadius: '4px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}>
-            <TrendingUp size={28} style={{ color: 'hsl(142, 76%, 36%)' }} />
-          </div>
-        </div>
-      </div>
-    </Card>
+    <MetricCard
+      title="Machine Uptime"
+      value="98.5%"
+      icon={<TrendingUp size={28} />}
+      iconColor="hsl(142, 76%, 36%)"
+      iconBackgroundColor="hsl(142, 76%, 36% / 0.12)"
+    />
   ),
   parameters: {
     docs: {
@@ -276,33 +233,21 @@ export const DashboardMetricLegacy: Story = {
   },
 };
 
-export const StatusCard: Story = {
+export const StatusCardExample: Story = {
   render: () => (
-    <Card style={{ width: '20rem' }}>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <h3 style={{ fontSize: '1.125rem', fontWeight: 600, color: 'hsl(0, 0%, 98%)', margin: 0 }}>
-            Machine Status
-          </h3>
-          <Badge variant="success">Online</Badge>
-        </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', color: 'hsl(0, 0%, 98%)' }}>
-          <div>
-            <p style={{ fontSize: '0.875rem', color: 'hsl(240, 5%, 64.9%)', margin: '0 0 0.25rem 0' }}>X Position</p>
-            <p style={{ fontSize: '1.125rem', fontFamily: 'JetBrains Mono, monospace', margin: 0 }}>125.450</p>
-          </div>
-          <div>
-            <p style={{ fontSize: '0.875rem', color: 'hsl(240, 5%, 64.9%)', margin: '0 0 0.25rem 0' }}>Y Position</p>
-            <p style={{ fontSize: '1.125rem', fontFamily: 'JetBrains Mono, monospace', margin: 0 }}>67.230</p>
-          </div>
-        </div>
-        <div style={{ display: 'flex', gap: '0.5rem' }}>
-          <Button variant="success" size="sm">Start</Button>
-          <Button variant="warning" size="sm">Pause</Button>
-          <Button variant="emergency" size="sm">Stop</Button>
-        </div>
-      </div>
-    </Card>
+    <StatusCard
+      title="Machine Status"
+      status={{ label: 'Online', variant: 'success' }}
+      values={[
+        { label: 'X Position', value: 125.450, precision: 3, unit: 'mm' },
+        { label: 'Y Position', value: 67.230, precision: 3, unit: 'mm' },
+      ]}
+      actions={[
+        { label: 'Start', variant: 'success' },
+        { label: 'Pause', variant: 'warning' },
+        { label: 'Stop', variant: 'emergency' },
+      ]}
+    />
   ),
   parameters: {
     docs: {
@@ -382,31 +327,15 @@ export const ActivityCardNew: Story = {
             { icon: <Activity size={16} />, title: 'Machine started', time: '5 min ago', color: 'hsl(262, 83%, 58%)' },
             { icon: <AlertCircle size={16} />, title: 'Maintenance due', time: '1 hour ago', color: 'hsl(48, 96%, 53%)' },
           ].map((item, index) => (
-            <div
+            <ActivityItem
               key={index}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '1rem',
-                padding: '1rem 1.5rem',
-                borderBottom: index < 2 ? '1px solid hsl(240, 3.7%, 15.9%)' : 'none',
-                cursor: 'pointer',
-                transition: 'background-color 0.2s',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = 'hsl(240, 10%, 8%)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'transparent';
-              }}
-            >
-              <div style={{ color: item.color }}>{item.icon}</div>
-              <div style={{ flex: 1 }}>
-                <div style={{ fontSize: '0.875rem', fontWeight: 500 }}>{item.title}</div>
-                <div style={{ fontSize: '0.75rem', color: 'hsl(240, 5%, 64.9%)' }}>{item.time}</div>
-              </div>
-              <ChevronRight size={16} style={{ color: 'hsl(240, 5%, 64.9%)' }} />
-            </div>
+              icon={item.icon}
+              title={item.title}
+              time={item.time}
+              iconColor={item.color}
+              borderBottom={index < 2}
+              onClick={() => console.log('Activity clicked:', item.title)}
+            />
           ))}
         </div>
       </CardContent>
@@ -428,59 +357,32 @@ export const ActivityCardNew: Story = {
 export const DashboardOverview: Story = {
   render: () => (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
-      <Card variant="dashboard" interactive noPadding>
-        <CardHeader>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <div>
-              <CardTitle>Production Overview</CardTitle>
-              <CardDescription>Today's performance</CardDescription>
-            </div>
-            <CardIcon style={{ backgroundColor: 'hsl(262, 83%, 58% / 0.1)', color: 'hsl(262, 83%, 58%)' }}>
-              <BarChart2 size={24} />
-            </CardIcon>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <CardValue>1,245</CardValue>
-          <CardChange variant="positive">+12% from yesterday</CardChange>
-        </CardContent>
-      </Card>
+      <MetricCard
+        title="Production Overview"
+        value="1,245"
+        change={{ value: "+12% from yesterday", variant: "positive" }}
+        icon={<BarChart2 size={24} />}
+        iconColor="hsl(262, 83%, 58%)"
+        iconBackgroundColor="hsl(262, 83%, 58% / 0.1)"
+      />
 
-      <Card variant="dashboard" interactive noPadding>
-        <CardHeader>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <div>
-              <CardTitle>Machine Efficiency</CardTitle>
-              <CardDescription>Current shift</CardDescription>
-            </div>
-            <CardIcon style={{ backgroundColor: 'hsl(142, 76%, 36% / 0.1)', color: 'hsl(142, 76%, 36%)' }}>
-              <Activity size={24} />
-            </CardIcon>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <CardValue>89.3%</CardValue>
-          <CardChange variant="neutral">Target: 85%</CardChange>
-        </CardContent>
-      </Card>
+      <MetricCard
+        title="Machine Efficiency"
+        value="89.3%"
+        change={{ value: "Target: 85%", variant: "neutral" }}
+        icon={<Activity size={24} />}
+        iconColor="hsl(142, 76%, 36%)"
+        iconBackgroundColor="hsl(142, 76%, 36% / 0.1)"
+      />
 
-      <Card variant="dashboard" interactive noPadding>
-        <CardHeader>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <div>
-              <CardTitle>Active Alerts</CardTitle>
-              <CardDescription>Requires attention</CardDescription>
-            </div>
-            <CardIcon style={{ backgroundColor: 'hsl(0, 84.2%, 60.2% / 0.1)', color: 'hsl(0, 84.2%, 60.2%)' }}>
-              <AlertCircle size={24} />
-            </CardIcon>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <CardValue>3</CardValue>
-          <CardChange variant="negative">2 critical</CardChange>
-        </CardContent>
-      </Card>
+      <MetricCard
+        title="Active Alerts"
+        value="3"
+        change={{ value: "2 critical", variant: "negative" }}
+        icon={<AlertCircle size={24} />}
+        iconColor="hsl(0, 84.2%, 60.2%)"
+        iconBackgroundColor="hsl(0, 84.2%, 60.2% / 0.1)"
+      />
     </div>
   ),
   parameters: {

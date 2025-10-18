@@ -8,6 +8,7 @@ import {
   getInputFocusStyles,
   getInputDisabledStyles
 } from '../../utils/tokens';
+import { FormFieldContext } from '../FormField/FormField';
 
 export type InputVariant = 'default' | 'search' | 'password' | 'number' | 'cnc';
 export type InputSize = 'sm' | 'default' | 'lg';
@@ -56,12 +57,13 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     const [isFocused, setIsFocused] = React.useState(false);
     const [isHovered, setIsHovered] = React.useState(false);
     const [passwordVisible, setPasswordVisible] = React.useState(false);
+    const formFieldContext = React.useContext(FormFieldContext);
     
     // Icon components
     const SearchIcon = () => (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <circle cx="11" cy="11" r="8"/>
-        <path d="21 21l-4.35-4.35"/>
+        <path d="M21 21l-4.35-4.35"/>
       </svg>
     );
     
@@ -415,7 +417,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
               </div>
             )}
           </div>
-          {error && (
+          {error && !formFieldContext.handlesError && (
             <p style={{ 
               fontSize: '0.75rem', // 12px
               color: tokens.colors.status.error, 

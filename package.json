@@ -25,7 +25,15 @@
     "changeset:version": "changeset version",
     "changeset:publish": "changeset publish",
     "setup": "npm install && npm run build",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "mcp:install": "cd tools/mcp && npm install",
+    "mcp:start": "cd tools/mcp && npm start",
+    "mcp:dev": "cd tools/mcp && npm run dev",
+    "mcp:install-claude": "node tools/mcp/install-claude.js",
+    "mcp:verify": "node tools/mcp/verify-installation.js",
+    "components:list": "echo 'Use MCP client to call list-components tool'",
+    "components:refresh": "echo 'Use MCP client to call refresh-cache tool'",
+    "components:details": "echo 'Use MCP client to call get-component-details tool'"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.4.8",
@@ -92,5 +100,15 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "tailwind-merge": "^2.6.0"
+  },
+  "mcp": {
+    "servers": {
+      "whttlr-ui-components": {
+        "command": "node",
+        "args": ["tools/mcp/server.js"],
+        "cwd": ".",
+        "env": {}
+      }
+    }
   }
 }

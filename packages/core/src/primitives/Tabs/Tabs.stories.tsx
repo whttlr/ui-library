@@ -6,6 +6,7 @@ import { StatusIndicator } from '../StatusIndicator/StatusIndicator';
 import { FormField } from '../FormField/FormField';
 import { Input } from '../Input/Input';
 import { Button } from '../Button/Button';
+import { CoordinateAxis } from '../CoordinateAxis/CoordinateAxis';
 import { Settings, Code, BarChart3, Wrench, Play, Pause, Square, AlertTriangle, CheckCircle, Monitor } from 'lucide-react';
 
 const meta: Meta<typeof Tabs> = {
@@ -493,53 +494,30 @@ export const CNCMachineInterface: Story = {
               gap: '1rem',
               marginBottom: '1.5rem'
             }}>
-              {/* X Axis */}
-              <div style={{ 
-                padding: '1rem',
-                backgroundColor: 'hsl(240, 3.7%, 15.9%)',
-                borderRadius: '0.5rem',
-                border: '1px solid hsl(240, 3.7%, 25%)',
-                textAlign: 'center'
-              }}>
-                <div style={{ color: 'hsl(240, 5%, 64.9%)', fontSize: '0.875rem', marginBottom: '0.5rem' }}>
-                  X Axis
-                </div>
-                <MonospaceText variant="coordinate" size="lg" precision={3} unit="mm">
-                  125.750
-                </MonospaceText>
-              </div>
+              <CoordinateAxis
+                label="X Axis"
+                value={125.750}
+                precision={3}
+                unit="mm"
+                size="lg"
+              />
               
-              {/* Y Axis */}
-              <div style={{ 
-                padding: '1rem',
-                backgroundColor: 'hsl(240, 3.7%, 15.9%)',
-                borderRadius: '0.5rem',
-                border: '1px solid hsl(240, 3.7%, 25%)',
-                textAlign: 'center'
-              }}>
-                <div style={{ color: 'hsl(240, 5%, 64.9%)', fontSize: '0.875rem', marginBottom: '0.5rem' }}>
-                  Y Axis
-                </div>
-                <MonospaceText variant="coordinate" size="lg" precision={3} unit="mm">
-                  -45.120
-                </MonospaceText>
-              </div>
+              <CoordinateAxis
+                label="Y Axis"
+                value={-45.120}
+                precision={3}
+                unit="mm"
+                size="lg"
+              />
               
-              {/* Z Axis */}
-              <div style={{ 
-                padding: '1rem',
-                backgroundColor: 'hsl(240, 3.7%, 15.9%)',
-                borderRadius: '0.5rem',
-                border: '1px solid hsl(240, 3.7%, 25%)',
-                textAlign: 'center'
-              }}>
-                <div style={{ color: 'hsl(240, 5%, 64.9%)', fontSize: '0.875rem', marginBottom: '0.5rem' }}>
-                  Z Axis
-                </div>
-                <MonospaceText variant="coordinate" size="lg" precision={3} unit="mm" highlight>
-                  2.000
-                </MonospaceText>
-              </div>
+              <CoordinateAxis
+                label="Z Axis"
+                value={2.000}
+                precision={3}
+                unit="mm"
+                size="lg"
+                highlight
+              />
             </div>
             
             <div style={{ 

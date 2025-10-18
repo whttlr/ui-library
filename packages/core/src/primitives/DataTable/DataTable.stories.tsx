@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { DataTable, DataTableColumn } from './DataTable';
 import { Badge } from '../Badge/Badge';
 import { Button } from '../Button/Button';
+import { ProgressBar } from '../ProgressBar/ProgressBar';
 import { Edit, Trash2, Eye, Play, Square, AlertTriangle } from 'lucide-react';
 
 const meta: Meta<typeof DataTable> = {
@@ -123,25 +124,14 @@ export const CNCJobTable: Story = {
         header: 'Progress',
         align: 'center',
         render: (value) => (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <div style={{
-              width: '60px',
-              height: '6px',
-              backgroundColor: 'hsl(240, 3.7%, 15.9%)',
-              borderRadius: '3px',
-              overflow: 'hidden'
-            }}>
-              <div style={{
-                width: `${value}%`,
-                height: '100%',
-                backgroundColor: value === 100 ? 'hsl(142, 76%, 36%)' : 
-                                value === 0 ? 'hsl(240, 5%, 64.9%)' : 'hsl(262, 83%, 58%)',
-                transition: 'width 0.3s ease'
-              }} />
-            </div>
-            <span style={{ fontSize: '0.75rem', fontFamily: 'JetBrains Mono, monospace' }}>
-              {value}%
-            </span>
+          <div style={{ width: '80px' }}>
+            <ProgressBar
+              value={value}
+              size="sm"
+              showValue={true}
+              showPercentage={true}
+              animated={true}
+            />
           </div>
         )
       },
@@ -295,27 +285,21 @@ export const MachineMonitoringTable: Story = {
         key: 'toolLife', 
         header: 'Tool Life',
         align: 'center',
-        render: (value) => (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <div style={{
-              width: '40px',
-              height: '6px',
-              backgroundColor: 'hsl(240, 3.7%, 15.9%)',
-              borderRadius: '3px',
-              overflow: 'hidden'
-            }}>
-              <div style={{
-                width: `${value}%`,
-                height: '100%',
-                backgroundColor: value > 50 ? 'hsl(142, 76%, 36%)' : 
-                                value > 25 ? 'hsl(48, 96%, 53%)' : 'hsl(0, 84.2%, 60.2%)',
-              }} />
+        render: (value) => {
+          const variant = value > 50 ? 'success' : value > 25 ? 'warning' : 'error';
+          return (
+            <div style={{ width: '60px' }}>
+              <ProgressBar
+                value={value}
+                size="sm"
+                variant={variant}
+                showValue={true}
+                showPercentage={true}
+                animated={false}
+              />
             </div>
-            <span style={{ fontSize: '0.75rem', fontFamily: 'JetBrains Mono, monospace' }}>
-              {value}%
-            </span>
-          </div>
-        )
+          );
+        }
       },
       { key: 'operator', header: 'Operator' },
     ];

@@ -12,7 +12,7 @@ import {
   Plus,
   Minus,
 } from 'lucide-react';
-import { Button } from '@whttlr/ui-core';
+import { Button, tokens } from '@whttlr/ui-core';
 import { cn } from '@whttlr/ui-theme';
 
 export interface JogControlsProps {

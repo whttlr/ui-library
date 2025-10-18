@@ -5,6 +5,12 @@ import {
   getFormFieldRequiredStyles,
 } from '../../utils/tokens';
 
+// Context to detect when components are inside FormField
+const FormFieldContext = React.createContext<{ handlesError: boolean }>({ handlesError: false });
+
+// Export context for use in other components
+export { FormFieldContext };
+
 export interface FormFieldProps {
   label?: string;
   helpText?: string;
@@ -67,28 +73,30 @@ export const FormField = React.forwardRef<HTMLDivElement, FormFieldProps>(({
   const requiredStyle = getFormFieldRequiredStyles();
 
   return (
-    <div ref={ref} style={containerStyle} className={className} {...props}>
-      {label && (
-        <label htmlFor={fieldId} style={labelStyle}>
-          {label}
-          {required && (
-            <span style={requiredStyle}>
-              *
-            </span>
-          )}
-        </label>
-      )}
-      
-      <div style={fieldContainerStyle}>
-        {enhancedChildren}
-        
-        {(helpText || error) && (
-          <div id={`${fieldId}-help`} style={helpTextStyle}>
-            {error || helpText}
-          </div>
+    <FormFieldContext.Provider value={{ handlesError: true }}>
+      <div ref={ref} style={containerStyle} className={className} {...props}>
+        {label && (
+          <label htmlFor={fieldId} style={labelStyle}>
+            {label}
+            {required && (
+              <span style={requiredStyle}>
+                *
+              </span>
+            )}
+          </label>
         )}
+        
+        <div style={fieldContainerStyle}>
+          {enhancedChildren}
+          
+          {(helpText || error) && (
+            <div id={`${fieldId}-help`} style={helpTextStyle}>
+              {error || helpText}
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </FormFieldContext.Provider>
   );
 });
 
