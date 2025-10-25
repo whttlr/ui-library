@@ -36,7 +36,7 @@ const StatusBadge: React.FC<{ status: MachineStatus }> = ({ status }) => {
   };
 
   return (
-    <Badge className={variants[status]} variant="outline">
+    <Badge className={variants[status]} variant="outline-default">
       {status.toUpperCase()}
     </Badge>
   );

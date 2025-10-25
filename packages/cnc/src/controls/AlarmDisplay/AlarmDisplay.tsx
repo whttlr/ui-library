@@ -118,13 +118,13 @@ export const AlarmDisplay: React.FC<AlarmDisplayProps> = ({
   const getAlarmColor = (type: Alarm['type']) => {
     switch (type) {
       case 'critical':
-        return tokens.colors.destructive.main;
+        return tokens.colors.status.error;
       case 'error':
-        return tokens.colors.destructive.main;
+        return tokens.colors.status.error;
       case 'warning':
-        return tokens.colors.warning.main;
+        return tokens.colors.status.warning;
       case 'info':
-        return tokens.colors.info.main;
+        return tokens.colors.status.info;
       default:
         return tokens.colors.text.secondary;
     }
@@ -155,7 +155,7 @@ export const AlarmDisplay: React.FC<AlarmDisplayProps> = ({
   const containerStyles: React.CSSProperties = {
     backgroundColor: tokens.colors.bg.secondary,
     borderRadius: tokens.radius.lg,
-    border: `1px solid ${tokens.colors.border.default}`,
+    border: `1px solid ${tokens.colors.border.primary}`,
     padding: tokens.spacing.lg,
   };
 
@@ -271,7 +271,7 @@ export const AlarmDisplay: React.FC<AlarmDisplayProps> = ({
           <div style={{ marginLeft: 'auto', display: 'flex', gap: tokens.spacing.sm }}>
             {unacknowledgedAlarms.length > 0 && (
               <Button
-                variant="outline"
+                variant="outline-default"
                 size="sm"
                 onClick={onAcknowledgeAll}
                 leftIcon={<CheckCircle size={16} />}
@@ -280,7 +280,7 @@ export const AlarmDisplay: React.FC<AlarmDisplayProps> = ({
               </Button>
             )}
             <Button
-              variant="outline"
+              variant="outline-default"
               size="sm"
               onClick={onClearAll}
               leftIcon={<X size={16} />}
@@ -306,7 +306,7 @@ export const AlarmDisplay: React.FC<AlarmDisplayProps> = ({
             backgroundColor: tokens.colors.bg.tertiary,
             border: 'none',
           }}>
-            <CheckCircle size={48} color={tokens.colors.success.main} style={{ margin: '0 auto 1rem' }} />
+            <CheckCircle size={48} color={tokens.colors.status.success} style={{ margin: '0 auto 1rem' }} />
             <h3 style={{ 
               margin: '0 0 0.5rem 0',
               color: tokens.colors.text.primary,
@@ -332,7 +332,7 @@ export const AlarmDisplay: React.FC<AlarmDisplayProps> = ({
                   tokens.colors.bg.tertiary : 
                   `${getAlarmColor(alarm.type)}10`,
                 border: `1px solid ${alarm.acknowledged ? 
-                  tokens.colors.border.default : 
+                  tokens.colors.border.primary : 
                   `${getAlarmColor(alarm.type)}40`}`,
                 opacity: alarm.acknowledged ? 0.7 : 1,
               }}
@@ -455,7 +455,7 @@ export const AlarmDisplay: React.FC<AlarmDisplayProps> = ({
                 }}>
                   {!alarm.acknowledged && (
                     <Button
-                      variant="outline"
+                      variant="outline-default"
                       size="sm"
                       onClick={() => onAcknowledge(alarm.id)}
                       leftIcon={<CheckCircle size={14} />}
@@ -507,20 +507,20 @@ export const CompactAlarmDisplay: React.FC<CompactAlarmDisplayProps> = ({
     gap: tokens.spacing.md,
     padding: tokens.spacing.md,
     backgroundColor: hasAlarms ? 
-      (hasCritical ? `${tokens.colors.destructive.main}15` : `${tokens.colors.warning.main}15`) :
+      (hasCritical ? `${tokens.colors.status.error}15` : `${tokens.colors.status.warning}15`) :
       tokens.colors.bg.secondary,
     borderRadius: tokens.radius.md,
     border: `1px solid ${hasAlarms ? 
-      (hasCritical ? `${tokens.colors.destructive.main}40` : `${tokens.colors.warning.main}40`) :
-      tokens.colors.border.default}`,
+      (hasCritical ? `${tokens.colors.status.error}40` : `${tokens.colors.status.warning}40`) :
+      tokens.colors.border.primary}`,
     cursor: onShowDetails ? 'pointer' : 'default',
   };
 
   const getStatusColor = () => {
-    if (hasCritical) return tokens.colors.destructive.main;
-    if (errorAlarms.length > 0) return tokens.colors.destructive.main;
-    if (warningAlarms.length > 0) return tokens.colors.warning.main;
-    return tokens.colors.success.main;
+    if (hasCritical) return tokens.colors.status.error;
+    if (errorAlarms.length > 0) return tokens.colors.status.error;
+    if (warningAlarms.length > 0) return tokens.colors.status.warning;
+    return tokens.colors.status.success;
   };
 
   const getStatusIcon = () => {

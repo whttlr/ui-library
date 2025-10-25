@@ -24,7 +24,6 @@ export {
   JogControls,
   CoordinateDisplay,
   EmergencyStop,
-  MachineStatusMonitor,
   ConnectionStatus
 } from './controls';
 

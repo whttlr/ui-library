@@ -4,7 +4,7 @@
   "description": "CNC-specific UI components for Whttlr applications",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
-  "types": "dist/index.d.ts",
+  "types": "dist/types/index.d.ts",
   "files": ["dist"],
   "scripts": {
     "build": "rollup -c",
@@ -14,8 +14,10 @@
     "clean": "rimraf dist"
   },
   "peerDependencies": {
-    "react": ">=17.0.0",
-    "react-dom": ">=17.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "@ant-design/icons": ">=5.0.0",
+    "antd": ">=5.0.0",
     "@react-three/fiber": ">=8.0.0",
     "@react-three/drei": ">=9.0.0",
     "three": ">=0.140.0",
@@ -25,5 +27,8 @@
   "dependencies": {
     "@whttlr/ui-core": "workspace:*",
     "@whttlr/ui-theme": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/three": "^0.169.0"
   }
 }

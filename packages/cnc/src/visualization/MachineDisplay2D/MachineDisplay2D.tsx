@@ -244,7 +244,7 @@ const MachineDisplay2D: React.FC<MachineDisplay2DProps> = ({
             </Button>
             {onSetOrigin && (
               <Button
-                variant="outline"
+                variant="outline-default"
                 size="sm"
                 onClick={onSetOrigin}
                 className="h-7 px-2 text-xs"
@@ -255,7 +255,7 @@ const MachineDisplay2D: React.FC<MachineDisplay2DProps> = ({
             )}
             {onGoHome && (
               <Button
-                variant="outline"
+                variant="outline-default"
                 size="sm"
                 onClick={onGoHome}
                 className="h-7 px-2 text-xs"

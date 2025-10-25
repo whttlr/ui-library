@@ -10,12 +10,12 @@ import {
   Clock,
   Hash
 } from 'lucide-react';
-import { 
-  Button, 
-  tokens, 
-  Card, 
-  Badge, 
-  Progress, 
+import {
+  Button,
+  legacyTokens as tokens,
+  Card,
+  Badge,
+  Progress,
   Select,
   cn 
 } from '@whttlr/ui-core';
@@ -65,7 +65,7 @@ export const ToolSelector: React.FC<ToolSelectorProps> = ({
   const containerStyles: React.CSSProperties = {
     backgroundColor: tokens.colors.bg.secondary,
     borderRadius: tokens.radius.lg,
-    border: `1px solid ${tokens.colors.border.default}`,
+    border: `1px solid ${tokens.colors.border.primary}`,
     padding: tokens.spacing.lg,
   };
 
@@ -123,7 +123,7 @@ export const ToolSelector: React.FC<ToolSelectorProps> = ({
         </span>
         {onToolChange && selectedTool && (
           <Button
-            variant="outline"
+            variant="outline-default"
             size="sm"
             onClick={() => onToolChange(selectedTool.id)}
             disabled={disabled}
@@ -182,7 +182,7 @@ export const ToolSelector: React.FC<ToolSelectorProps> = ({
                 </div>
               </div>
             </div>
-            <Badge variant="outline">{selectedTool.type}</Badge>
+            <Badge variant="outline-default">{selectedTool.type}</Badge>
           </div>
 
           {/* Tool Specifications */}
@@ -307,7 +307,7 @@ export const ToolSelector: React.FC<ToolSelectorProps> = ({
               display: 'flex', 
               gap: tokens.spacing.md,
               paddingTop: tokens.spacing.sm,
-              borderTop: `1px solid ${tokens.colors.border.default}`,
+              borderTop: `1px solid ${tokens.colors.border.primary}`,
             }}>
               {selectedTool.timeInUse && (
                 <div style={{ display: 'flex', alignItems: 'center', gap: tokens.spacing.xs }}>
@@ -380,7 +380,7 @@ export const CompactToolSelector: React.FC<CompactToolSelectorProps> = ({
     padding: tokens.spacing.md,
     backgroundColor: tokens.colors.bg.secondary,
     borderRadius: tokens.radius.md,
-    border: `1px solid ${tokens.colors.border.default}`,
+    border: `1px solid ${tokens.colors.border.primary}`,
   };
 
   const toolDisplayStyles: React.CSSProperties = {
@@ -415,7 +415,7 @@ export const CompactToolSelector: React.FC<CompactToolSelectorProps> = ({
         {selectedTool && (
           <>
             <div style={{ 
-              borderLeft: `1px solid ${tokens.colors.border.default}`,
+              borderLeft: `1px solid ${tokens.colors.border.primary}`,
               height: '20px',
             }} />
             <div style={{ 

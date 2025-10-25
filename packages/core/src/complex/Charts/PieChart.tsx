@@ -131,6 +131,8 @@ export const PieChart: React.FC<PieChartProps> = ({
                 <Tooltip 
                   formatter={(value, name) => formatTooltipValue(value as number, name as string, {})}
                   contentStyle={getChartTooltipStyles()}
+                  labelStyle={{ color: getChartTooltipStyles().color }}
+                  itemStyle={{ color: getChartTooltipStyles().color }}
                 />
               )}
               
@@ -157,7 +159,8 @@ export const PieChart: React.FC<PieChartProps> = ({
                 {data.map((entry, index) => (
                   <Cell 
                     key={`cell-${index}`} 
-                    fill={colors[index % colors.length]} 
+                    fill={colors[index % colors.length]}
+                    stroke="none"
                   />
                 ))}
               </Pie>

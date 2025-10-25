@@ -14,7 +14,7 @@ import {
   AlertCircle,
   CheckCircle,
   Crosshair,
-  Grid3x3,
+  Grid,
   Ruler,
   Home,
   Lock,
@@ -118,7 +118,7 @@ export const ProbeControl: React.FC<ProbeControlProps> = ({
       case 'edge':
         return <Ruler size={14} />;
       case 'corner':
-        return <Grid3x3 size={14} />;
+        return <Grid size={14} />;
       case 'angle':
         return <RotateCcw size={14} />;
       default:
@@ -130,7 +130,7 @@ export const ProbeControl: React.FC<ProbeControlProps> = ({
   const containerStyles: React.CSSProperties = {
     backgroundColor: tokens.colors.bg.secondary,
     borderRadius: tokens.radius.lg,
-    border: `1px solid ${tokens.colors.border.default}`,
+    border: `1px solid ${tokens.colors.border.primary}`,
     padding: tokens.spacing.lg,
   };
 
@@ -197,7 +197,7 @@ export const ProbeControl: React.FC<ProbeControlProps> = ({
           </h4>
           <div style={{ display: 'flex', gap: tokens.spacing.sm }}>
             <Button
-              variant="outline"
+              variant="outline-default"
               size="sm"
               onClick={() => onSetZero()}
               disabled={disabled || isProbing}
@@ -206,7 +206,7 @@ export const ProbeControl: React.FC<ProbeControlProps> = ({
               Zero All
             </Button>
             <Button
-              variant="outline"
+              variant="outline-default"
               size="sm"
               onClick={onRetract}
               disabled={disabled || isProbing}
@@ -222,7 +222,7 @@ export const ProbeControl: React.FC<ProbeControlProps> = ({
           precision={precision}
           showLabels={true}
         />
-      </div>
+      </Card>
 
       {/* Probe Settings */}
       {showSettings && (
@@ -263,7 +263,7 @@ export const ProbeControl: React.FC<ProbeControlProps> = ({
                   width: '100%',
                   padding: tokens.spacing.sm,
                   backgroundColor: tokens.colors.bg.primary,
-                  border: `1px solid ${tokens.colors.border.default}`,
+                  border: `1px solid ${tokens.colors.border.primary}`,
                   borderRadius: tokens.radius.sm,
                   color: tokens.colors.text.primary,
                   fontSize: tokens.text.size.sm[0],
@@ -288,7 +288,7 @@ export const ProbeControl: React.FC<ProbeControlProps> = ({
                   width: '100%',
                   padding: tokens.spacing.sm,
                   backgroundColor: tokens.colors.bg.primary,
-                  border: `1px solid ${tokens.colors.border.default}`,
+                  border: `1px solid ${tokens.colors.border.primary}`,
                   borderRadius: tokens.radius.sm,
                   color: tokens.colors.text.primary,
                   fontSize: tokens.text.size.sm[0],
@@ -313,7 +313,7 @@ export const ProbeControl: React.FC<ProbeControlProps> = ({
                   width: '100%',
                   padding: tokens.spacing.sm,
                   backgroundColor: tokens.colors.bg.primary,
-                  border: `1px solid ${tokens.colors.border.default}`,
+                  border: `1px solid ${tokens.colors.border.primary}`,
                   borderRadius: tokens.radius.sm,
                   color: tokens.colors.text.primary,
                   fontSize: tokens.text.size.sm[0],
@@ -349,7 +349,7 @@ export const ProbeControl: React.FC<ProbeControlProps> = ({
           {/* Y+ */}
           <div />
           <Button
-            variant="outline"
+            variant="outline-default"
             size="sm"
             onClick={() => onProbe('y+')}
             disabled={disabled || isProbing}
@@ -361,7 +361,7 @@ export const ProbeControl: React.FC<ProbeControlProps> = ({
           
           {/* X-, Z-, X+ */}
           <Button
-            variant="outline"
+            variant="outline-default"
             size="sm"
             onClick={() => onProbe('x-')}
             disabled={disabled || isProbing}
@@ -370,7 +370,7 @@ export const ProbeControl: React.FC<ProbeControlProps> = ({
             X-
           </Button>
           <Button
-            variant="outline"
+            variant="outline-default"
             size="sm"
             onClick={() => onProbe('z-')}
             disabled={disabled || isProbing}
@@ -379,7 +379,7 @@ export const ProbeControl: React.FC<ProbeControlProps> = ({
             Z-
           </Button>
           <Button
-            variant="outline"
+            variant="outline-default"
             size="sm"
             onClick={() => onProbe('x+')}
             disabled={disabled || isProbing}
@@ -391,7 +391,7 @@ export const ProbeControl: React.FC<ProbeControlProps> = ({
           {/* Y- */}
           <div />
           <Button
-            variant="outline"
+            variant="outline-default"
             size="sm"
             onClick={() => onProbe('y-')}
             disabled={disabled || isProbing}
@@ -498,11 +498,11 @@ export const ProbeControl: React.FC<ProbeControlProps> = ({
           <div style={{ 
             padding: tokens.spacing.sm,
             backgroundColor: lastResult.success ? 
-              `${tokens.colors.success.main}15` : 
-              `${tokens.colors.destructive.main}15`,
+              `${tokens.colors.status.success}15` : 
+              `${tokens.colors.status.error}15`,
             border: `1px solid ${lastResult.success ? 
-              `${tokens.colors.success.main}40` : 
-              `${tokens.colors.destructive.main}40`}`,
+              `${tokens.colors.status.success}40` : 
+              `${tokens.colors.status.error}40`}`,
             borderRadius: tokens.radius.sm,
             marginBottom: showResults ? tokens.spacing.md : 0,
           }}>
@@ -513,9 +513,9 @@ export const ProbeControl: React.FC<ProbeControlProps> = ({
               marginBottom: tokens.spacing.xs,
             }}>
               {lastResult.success ? (
-                <CheckCircle size={16} color={tokens.colors.success.main} />
+                <CheckCircle size={16} color={tokens.colors.status.success} />
               ) : (
-                <AlertCircle size={16} color={tokens.colors.destructive.main} />
+                <AlertCircle size={16} color={tokens.colors.status.error} />
               )}
               <span style={{ 
                 fontSize: tokens.text.size.sm[0],
@@ -542,7 +542,7 @@ export const ProbeControl: React.FC<ProbeControlProps> = ({
             ) : (
               <div style={{ 
                 fontSize: tokens.text.size.sm[0],
-                color: tokens.colors.destructive.main,
+                color: tokens.colors.status.error,
               }}>
                 {lastResult.error || 'Probe failed'}
               </div>
@@ -582,7 +582,7 @@ export const ProbeControl: React.FC<ProbeControlProps> = ({
                   }}
                 >
                   <div style={{ 
-                    color: result.success ? tokens.colors.success.main : tokens.colors.destructive.main,
+                    color: result.success ? tokens.colors.status.success : tokens.colors.status.error,
                   }}>
                     {getProbeIcon(result.type)}
                   </div>
@@ -605,7 +605,7 @@ export const ProbeControl: React.FC<ProbeControlProps> = ({
                     ) : (
                       <div style={{ 
                         fontSize: tokens.text.size.xs[0],
-                        color: tokens.colors.destructive.main,
+                        color: tokens.colors.status.error,
                       }}>
                         {result.error || 'Failed'}
                       </div>
@@ -661,7 +661,7 @@ export const CompactProbeControl: React.FC<CompactProbeControlProps> = ({
     padding: tokens.spacing.md,
     backgroundColor: tokens.colors.bg.secondary,
     borderRadius: tokens.radius.md,
-    border: `1px solid ${tokens.colors.border.default}`,
+    border: `1px solid ${tokens.colors.border.primary}`,
   };
 
   return (
@@ -669,7 +669,7 @@ export const CompactProbeControl: React.FC<CompactProbeControlProps> = ({
       <Target size={18} color={tokens.colors.text.secondary} />
       
       <div style={{ 
-        borderLeft: `1px solid ${tokens.colors.border.default}`,
+        borderLeft: `1px solid ${tokens.colors.border.primary}`,
         height: '20px',
       }} />
       
@@ -679,7 +679,7 @@ export const CompactProbeControl: React.FC<CompactProbeControlProps> = ({
         gap: tokens.spacing.sm,
       }}>
         <Button
-          variant="outline"
+          variant="outline-default"
           size="sm"
           onClick={() => onProbe('z-')}
           disabled={disabled || isProbing}
@@ -696,7 +696,7 @@ export const CompactProbeControl: React.FC<CompactProbeControlProps> = ({
       {onShowDetails && (
         <>
           <div style={{ 
-            borderLeft: `1px solid ${tokens.colors.border.default}`,
+            borderLeft: `1px solid ${tokens.colors.border.primary}`,
             height: '20px',
           }} />
           <Button

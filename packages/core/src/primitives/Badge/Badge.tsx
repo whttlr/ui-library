@@ -134,7 +134,7 @@ const StatusBadge = React.forwardRef<
   const statusConfig = {
     connected: { variant: 'success' as const, text: 'Connected', pulse: false },
     disconnected: { variant: 'danger' as const, text: 'Disconnected', pulse: false },
-    idle: { variant: 'secondary' as const, text: 'Idle', pulse: false },
+    idle: { variant: 'outline-secondary' as const, text: 'Idle', pulse: false },
     running: { variant: 'info' as const, text: 'Running', pulse: true },
     error: { variant: 'danger' as const, text: 'Error', pulse: true },
     warning: { variant: 'warning' as const, text: 'Warning', pulse: true },

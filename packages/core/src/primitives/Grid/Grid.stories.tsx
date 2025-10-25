@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import * as React from 'react';
-import { Grid, GridItem, DashboardGrid, ControlGrid, JogGrid, Flex, Container, Stack } from './Grid';
+import { Grid, GridItem, DashboardGrid, ControlGrid, JogGrid, Flex, Stack } from './Grid';
+import { Container } from '../Container/Container';
 import { Card } from '../Card/Card';
 import { Button } from '../Button/Button';
 import { Badge } from '../Badge/Badge';

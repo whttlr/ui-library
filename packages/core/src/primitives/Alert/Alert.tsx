@@ -25,7 +25,7 @@ const getAlertInlineStyles = (variant: AlertVariant = 'default', layout: AlertLa
 };
 
 const alertVariants = cva(
-  'relative w-full rounded-lg border [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground [&>svg~*]:pl-7',
+  'relative w-full rounded-lg border',
   {
     variants: {
       variant: {

@@ -1,11 +1,2 @@
-export { 
-  CoordinateDisplay, 
-  CompactCoordinateDisplay, 
-  LiveCoordinateDisplay 
-} from './CoordinateDisplay';
-export type { 
-  Coordinate,
-  CoordinateDisplayProps, 
-  CompactCoordinateDisplayProps, 
-  LiveCoordinateDisplayProps 
-} from './CoordinateDisplay';
+export { CoordinateDisplay, CompactCoordinateDisplay } from './CoordinateDisplay';
+export type { CoordinateDisplayProps, CompactCoordinateDisplayProps, Coordinate } from './CoordinateDisplay';

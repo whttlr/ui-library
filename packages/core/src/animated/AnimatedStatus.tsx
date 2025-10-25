@@ -6,6 +6,7 @@
 import React from 'react';
 import { motion, Variants } from 'framer-motion';
 import { cn } from '../utils';
+import { tokens } from '../utils/tokens';
 import {
   CheckCircleOutlined,
   ExclamationCircleOutlined,
@@ -18,6 +19,7 @@ export interface AnimatedStatusProps {
   label?: string;
   size?: 'sm' | 'md' | 'lg';
   showPulse?: boolean;
+  showSpinner?: boolean; // Show spinner instead of pulsing dot for 'running' status
   className?: string;
 }
 
@@ -26,26 +28,57 @@ export const AnimatedStatus: React.FC<AnimatedStatusProps> = ({
   label,
   size = 'md',
   showPulse = true,
+  showSpinner = false,
   className,
 }) => {
   const statusConfig = {
-    connected: { color: 'bg-green-500', icon: CheckCircleOutlined, text: 'Connected' },
-    disconnected: { color: 'bg-red-500', icon: CloseOutlined, text: 'Disconnected' },
-    idle: { color: 'bg-amber-500', icon: ExclamationCircleOutlined, text: 'Idle' },
-    running: { color: 'bg-blue-500', icon: LoadingOutlined, text: 'Running' },
-    error: { color: 'bg-red-600', icon: ExclamationCircleOutlined, text: 'Error' },
-    warning: { color: 'bg-amber-600', icon: ExclamationCircleOutlined, text: 'Warning' },
+    connected: {
+      color: 'hsl(142, 76%, 36%)',
+      icon: CheckCircleOutlined,
+      text: 'Connected',
+      iconColor: 'hsl(142, 76%, 36%)'
+    },
+    disconnected: {
+      color: 'hsl(0, 84%, 60%)',
+      icon: CloseOutlined,
+      text: 'Disconnected',
+      iconColor: 'hsl(0, 84%, 60%)'
+    },
+    idle: {
+      color: 'hsl(38, 92%, 50%)',
+      icon: ExclamationCircleOutlined,
+      text: 'Idle',
+      iconColor: 'hsl(38, 92%, 50%)'
+    },
+    running: {
+      color: tokens.colors.primary.main,
+      icon: LoadingOutlined,
+      text: 'Running',
+      iconColor: tokens.colors.primary.main
+    },
+    error: {
+      color: 'hsl(0, 84%, 50%)',
+      icon: ExclamationCircleOutlined,
+      text: 'Error',
+      iconColor: 'hsl(0, 84%, 50%)'
+    },
+    warning: {
+      color: 'hsl(38, 92%, 40%)',
+      icon: ExclamationCircleOutlined,
+      text: 'Warning',
+      iconColor: 'hsl(38, 92%, 40%)'
+    },
   };
-  
+
   const config = statusConfig[status];
   const Icon = config.icon;
-  
-  const sizeClasses = {
-    sm: 'w-2 h-2',
-    md: 'w-3 h-3',
-    lg: 'w-4 h-4',
+
+  const sizeStyles = {
+    sm: { width: '6px', height: '6px' },
+    md: { width: '8px', height: '8px' },
+    lg: { width: '10px', height: '10px' },
   };
-  
+
   const pulseVariants: Variants = {
     pulse: {
       scale: [1, 1.2, 1],
@@ -58,52 +91,83 @@ export const AnimatedStatus: React.FC<AnimatedStatusProps> = ({
     },
     static: {}
   };
-  
+
   return (
-    <div className={cn('flex items-center space-x-2', className)}>
-      <div className="relative">
+    <motion.div
+      className={cn(className)}
+      style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: '6px',
+        padding: '2px 10px',
+        borderRadius: '9999px',
+        border: `1px solid ${config.color}`,
+        backgroundColor: 'transparent',
+      }}
+      initial={{ scale: 0.95, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
+    >
+      {/* Show spinner on the left if showSpinner is true and status is running */}
+      {status === 'running' && showSpinner ? (
         <motion.div
-          className={cn(
-            'rounded-full',
-            config.color,
-            sizeClasses[size]
-          )}
-          variants={pulseVariants}
-          animate={showPulse && (status === 'running' || status === 'connected') ? 'pulse' : 'static'}
-        />
-        {showPulse && (status === 'running' || status === 'connected') && (
-          <motion.div
-            className={cn(
-              'absolute inset-0 rounded-full',
-              config.color,
-              'opacity-20'
-            )}
-            animate={{
-              scale: [1, 2],
-              opacity: [0.3, 0],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeOut"
-            }}
-          />
-        )}
-      </div>
-      
-      <span className="text-sm font-medium text-foreground">
-        {label || config.text}
-      </span>
-      
-      {status === 'running' && (
-        <motion.div
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            transformOrigin: 'center center',
+            lineHeight: 0,
+            color: config.iconColor,
+            fontSize: '0.75rem',
+          }}
           animate={{ rotate: 360 }}
           transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
         >
-          <Icon className="text-blue-500" />
+          <Icon style={{ color: config.iconColor, fontSize: '0.75rem' }} />
         </motion.div>
+      ) : (
+        /* Otherwise show the pulsing dot */
+        <div style={{ position: 'relative' }}>
+          <motion.div
+            style={{
+              borderRadius: '9999px',
+              backgroundColor: config.color,
+              ...sizeStyles[size],
+            }}
+            variants={pulseVariants}
+            animate={showPulse && (status === 'running' || status === 'connected') ? 'pulse' : 'static'}
+          />
+          {showPulse && (status === 'running' || status === 'connected') && (
+            <motion.div
+              style={{
+                position: 'absolute',
+                inset: 0,
+                borderRadius: '9999px',
+                backgroundColor: config.color,
+                opacity: 0.2,
+              }}
+              animate={{
+                scale: [1, 2],
+                opacity: [0.3, 0],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeOut"
+              }}
+            />
+          )}
+        </div>
       )}
-    </div>
+
+      <span style={{
+        fontSize: '0.75rem',
+        fontWeight: 600,
+        color: config.color,
+      }}>
+        {label || config.text}
+      </span>
+    </motion.div>
   );
 };
 

@@ -152,7 +152,7 @@ export const GCodeViewer: React.FC<GCodeViewerProps> = ({
   const containerStyles: React.CSSProperties = {
     backgroundColor: tokens.colors.bg.secondary,
     borderRadius: tokens.radius.lg,
-    border: `1px solid ${tokens.colors.border.default}`,
+    border: `1px solid ${tokens.colors.border.primary}`,
     display: 'flex',
     flexDirection: 'column',
     height: maxHeight,
@@ -164,7 +164,7 @@ export const GCodeViewer: React.FC<GCodeViewerProps> = ({
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: tokens.spacing.md,
-    borderBottom: `1px solid ${tokens.colors.border.default}`,
+    borderBottom: `1px solid ${tokens.colors.border.primary}`,
   };
 
   // Code container styles
@@ -309,7 +309,7 @@ export const GCodeViewer: React.FC<GCodeViewerProps> = ({
       {/* Footer Info */}
       <div style={{ 
         padding: tokens.spacing.sm,
-        borderTop: `1px solid ${tokens.colors.border.default}`,
+        borderTop: `1px solid ${tokens.colors.border.primary}`,
         fontSize: tokens.text.size.xs[0],
         color: tokens.colors.text.secondary,
         display: 'flex',
@@ -345,7 +345,7 @@ export const CompactGCodeViewer: React.FC<CompactGCodeViewerProps> = ({
   const containerStyles: React.CSSProperties = {
     backgroundColor: tokens.colors.bg.secondary,
     borderRadius: tokens.radius.md,
-    border: `1px solid ${tokens.colors.border.default}`,
+    border: `1px solid ${tokens.colors.border.primary}`,
     padding: tokens.spacing.sm,
     fontFamily: tokens.text.family.mono.join(', '),
     fontSize: tokens.text.size.xs[0],

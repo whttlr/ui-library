@@ -9,7 +9,7 @@ import React, { useState } from 'react';
 import { Card, Button, Input, Divider } from 'antd';
 import { 
   HomeOutlined,
-  TargetOutlined,
+  AimOutlined,
 } from '@ant-design/icons';
 
 // ============================================================================
@@ -192,7 +192,7 @@ export const QuickJogForm: React.FC<QuickJogFormProps> = ({
             disabled={disabled}
             className="w-full"
             type="default"
-            icon={<TargetOutlined />}
+            icon={<AimOutlined />}
           >
             Go To Position
           </Button>

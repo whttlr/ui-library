@@ -90,7 +90,7 @@ export const MachineCoordinateSystem: React.FC<MachineCoordinateSystemProps> = (
   const containerStyles: React.CSSProperties = {
     backgroundColor: tokens.colors.bg.secondary,
     borderRadius: tokens.radius.lg,
-    border: `1px solid ${tokens.colors.border.default}`,
+    border: `1px solid ${tokens.colors.border.primary}`,
     padding: tokens.spacing.lg,
   };
 
@@ -152,12 +152,12 @@ export const MachineCoordinateSystem: React.FC<MachineCoordinateSystemProps> = (
           Coordinate System
         </span>
         <div style={{ display: 'flex', alignItems: 'center', gap: tokens.spacing.sm }}>
-          <Badge variant="outline">
+          <Badge variant="outline-default">
             Active: {activeOffsetData?.name}
           </Badge>
           {onOffsetSave && selectedOffsetData && (
             <Button
-              variant="outline"
+              variant="outline-default"
               size="sm"
               onClick={() => onOffsetSave(selectedOffsetData.id)}
               disabled={disabled}
@@ -411,10 +411,10 @@ export const MachineCoordinateSystem: React.FC<MachineCoordinateSystemProps> = (
         gap: tokens.spacing.sm,
         marginTop: tokens.spacing.lg,
         paddingTop: tokens.spacing.md,
-        borderTop: `1px solid ${tokens.colors.border.default}`,
+        borderTop: `1px solid ${tokens.colors.border.primary}`,
       }}>
         <Button
-          variant="outline"
+          variant="outline-default"
           size="sm"
           onClick={() => {
             const currentPos = machinePosition;
@@ -431,7 +431,7 @@ export const MachineCoordinateSystem: React.FC<MachineCoordinateSystemProps> = (
         </Button>
         
         <Button
-          variant="outline"
+          variant="outline-default"
           size="sm"
           onClick={() => {
             if (selectedOffsetData) {
@@ -477,7 +477,7 @@ export const CompactCoordinateSystem: React.FC<CompactCoordinateSystemProps> = (
     padding: tokens.spacing.md,
     backgroundColor: tokens.colors.bg.secondary,
     borderRadius: tokens.radius.md,
-    border: `1px solid ${tokens.colors.border.default}`,
+    border: `1px solid ${tokens.colors.border.primary}`,
   };
 
   const position = showMachine ? machinePosition : workPosition;
@@ -496,7 +496,7 @@ export const CompactCoordinateSystem: React.FC<CompactCoordinateSystemProps> = (
       </Button>
       
       <div style={{ 
-        borderLeft: `1px solid ${tokens.colors.border.default}`,
+        borderLeft: `1px solid ${tokens.colors.border.primary}`,
         height: '20px',
       }} />
       
@@ -522,7 +522,7 @@ export const CompactCoordinateSystem: React.FC<CompactCoordinateSystemProps> = (
       {onOffsetClick && (
         <>
           <div style={{ 
-            borderLeft: `1px solid ${tokens.colors.border.default}`,
+            borderLeft: `1px solid ${tokens.colors.border.primary}`,
             height: '20px',
           }} />
           <Button

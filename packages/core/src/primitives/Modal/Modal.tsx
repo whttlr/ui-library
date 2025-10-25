@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 import { X } from 'lucide-react';
-import { 
-  tokens, 
-  getModalSizeStyles, 
-  getModalBaseStyles, 
-  getModalOverlayStyles, 
-  getModalHeaderStyles, 
-  getModalContentStyles 
+import { tokens } from '../../tokens';
+import {
+  getModalSizeStyles,
+  getModalBaseStyles,
+  getModalOverlayStyles,
+  getModalHeaderStyles,
+  getModalContentStyles
 } from '../../utils/tokens';
 
 export interface ModalProps {
@@ -91,8 +91,8 @@ export const Modal: React.FC<ModalProps> = ({
               <h3
                 style={{
                   margin: 0,
-                  fontSize: tokens.text.size.lg,
-                  fontWeight: tokens.text.weight.semibold,
+                  fontSize: tokens.typography.fontSize.lg,
+                  fontWeight: tokens.typography.fontWeight.semibold,
                   color: tokens.colors.text.primary,
                 }}
               >
@@ -112,12 +112,12 @@ export const Modal: React.FC<ModalProps> = ({
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  transition: tokens.transition.default,
+                  transition: tokens.transitions.all,
                   marginLeft: 'auto',
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.color = tokens.colors.text.primary;
-                  e.currentTarget.style.backgroundColor = tokens.colors.interactive.hover;
+                  e.currentTarget.style.backgroundColor = tokens.colors.bg.hover;
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.color = tokens.colors.text.secondary;
@@ -140,7 +140,7 @@ export const Modal: React.FC<ModalProps> = ({
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         @keyframes modalOverlayFadeIn {
           from {
             opacity: 0;
@@ -196,17 +196,17 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
     padding: `${tokens.spacing.sm} ${tokens.spacing.md}`,
     borderRadius: tokens.radius.md,
     border: 'none',
-    fontSize: tokens.text.size.sm,
-    fontWeight: tokens.text.weight.medium,
+    fontSize: tokens.typography.fontSize.sm,
+    fontWeight: tokens.typography.fontWeight.medium,
     cursor: 'pointer',
-    transition: tokens.transition.default,
+    transition: tokens.transitions.all,
     ...(variant === 'danger'
       ? {
-          backgroundColor: tokens.colors.status.error,
+          backgroundColor: tokens.colors.bg.error,
           color: tokens.colors.text.primary,
         }
       : {
-          backgroundColor: tokens.colors.primary.main,
+          backgroundColor: tokens.colors.cnc.primary,
           color: tokens.colors.text.primary,
         }),
   };
@@ -214,19 +214,19 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
   const cancelButtonStyle: React.CSSProperties = {
     padding: `${tokens.spacing.sm} ${tokens.spacing.md}`,
     borderRadius: tokens.radius.md,
-    border: `1px solid ${tokens.colors.border.primary}`,
+    border: `1px solid ${tokens.colors.border.default}`,
     backgroundColor: 'transparent',
     color: tokens.colors.text.primary,
-    fontSize: tokens.text.size.sm,
-    fontWeight: tokens.text.weight.medium,
+    fontSize: tokens.typography.fontSize.sm,
+    fontWeight: tokens.typography.fontWeight.medium,
     cursor: 'pointer',
-    transition: tokens.transition.default,
+    transition: tokens.transitions.all,
   };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={title} size="sm">
-      <div style={{ marginBottom: '1.5rem' }}>
-        <p style={{ margin: 0, lineHeight: 1.5, color: tokens.colors.text.secondary }}>
+      <div style={{ marginBottom: tokens.spacing.lg }}>
+        <p style={{ margin: 0, lineHeight: tokens.typography.lineHeight.normal, color: tokens.colors.text.secondary }}>
           {message}
         </p>
       </div>
@@ -248,14 +248,14 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
           style={confirmButtonStyle}
           onMouseEnter={(e) => {
             if (variant === 'danger') {
-              e.currentTarget.style.backgroundColor = tokens.colors.status.error;
+              e.currentTarget.style.backgroundColor = tokens.colors.bg.error;
             } else {
-              e.currentTarget.style.backgroundColor = tokens.colors.primary.hover;
+              e.currentTarget.style.backgroundColor = tokens.colors.cnc.primary;
             }
           }}
           onMouseLeave={(e) => {
             if (variant === 'danger') {
-              e.currentTarget.style.backgroundColor = tokens.colors.status.error;
+              e.currentTarget.style.backgroundColor = tokens.colors.bg.error;
             } else {
               e.currentTarget.style.backgroundColor = tokens.colors.primary.main;
             }

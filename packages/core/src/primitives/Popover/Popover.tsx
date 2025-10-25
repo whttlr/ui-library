@@ -315,7 +315,7 @@ export const Popover: React.FC<PopoverProps> = ({
         </div>
       )}
       
-      <style jsx>{`
+      <style>{`
         @keyframes popoverFadeIn {
           from {
             opacity: 0;

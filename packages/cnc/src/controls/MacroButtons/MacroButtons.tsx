@@ -120,13 +120,13 @@ export const MacroButtons: React.FC<MacroButtonsProps> = ({
   const getCategoryColor = (category: string) => {
     switch (category) {
       case 'setup':
-        return tokens.colors.info.main;
+        return tokens.colors.status.info;
       case 'operation':
-        return tokens.colors.success.main;
+        return tokens.colors.status.success;
       case 'maintenance':
-        return tokens.colors.warning.main;
+        return tokens.colors.status.warning;
       case 'safety':
-        return tokens.colors.destructive.main;
+        return tokens.colors.status.error;
       default:
         return tokens.colors.primary.main;
     }
@@ -158,7 +158,7 @@ export const MacroButtons: React.FC<MacroButtonsProps> = ({
   const containerStyles: React.CSSProperties = {
     backgroundColor: tokens.colors.bg.secondary,
     borderRadius: tokens.radius.lg,
-    border: `1px solid ${tokens.colors.border.default}`,
+    border: `1px solid ${tokens.colors.border.primary}`,
     padding: tokens.spacing.lg,
   };
 
@@ -188,13 +188,13 @@ export const MacroButtons: React.FC<MacroButtonsProps> = ({
           Macro Buttons
         </span>
         <div style={{ display: 'flex', alignItems: 'center', gap: tokens.spacing.sm }}>
-          <Badge variant="outline">
+          <Badge variant="outline-default">
             {filteredMacros.length} macros
           </Badge>
           <div style={{ display: 'flex', gap: tokens.spacing.xs }}>
             {onAdd && (
               <Button
-                variant="outline"
+                variant="outline-default"
                 size="sm"
                 onClick={onAdd}
                 disabled={disabled}
@@ -257,7 +257,7 @@ export const MacroButtons: React.FC<MacroButtonsProps> = ({
               style={{ 
                 padding: tokens.spacing.md,
                 backgroundColor: tokens.colors.bg.tertiary,
-                border: `1px solid ${tokens.colors.border.default}`,
+                border: `1px solid ${tokens.colors.border.primary}`,
                 opacity: macro.enabled === false ? 0.5 : 1,
                 position: 'relative',
                 overflow: 'hidden',
@@ -278,7 +278,7 @@ export const MacroButtons: React.FC<MacroButtonsProps> = ({
                   leftIcon={isExecuting ? <CheckCircle size={16} /> : (macro.icon || getDefaultIcon(macro.category || 'custom'))}
                   style={{ 
                     flex: 1,
-                    backgroundColor: isExecuting ? tokens.colors.success.main : undefined,
+                    backgroundColor: isExecuting ? tokens.colors.status.success : undefined,
                     color: macro.color || undefined,
                   }}
                 >
@@ -337,7 +337,7 @@ export const MacroButtons: React.FC<MacroButtonsProps> = ({
               }}>
                 {macro.category && (
                   <Badge 
-                    variant="outline"
+                    variant="outline-default"
                     style={{ 
                       fontSize: tokens.text.size.xs[0],
                       color: getCategoryColor(macro.category),
@@ -457,7 +457,7 @@ export const MacroButtons: React.FC<MacroButtonsProps> = ({
           </p>
           {onAdd && (
             <Button
-              variant="outline"
+              variant="outline-default"
               onClick={onAdd}
               disabled={disabled}
               leftIcon={<Plus size={16} />}
@@ -531,7 +531,7 @@ export const CompactMacroButtons: React.FC<CompactMacroButtonsProps> = ({
     padding: tokens.spacing.md,
     backgroundColor: tokens.colors.bg.secondary,
     borderRadius: tokens.radius.md,
-    border: `1px solid ${tokens.colors.border.default}`,
+    border: `1px solid ${tokens.colors.border.primary}`,
   };
 
   return (
@@ -539,7 +539,7 @@ export const CompactMacroButtons: React.FC<CompactMacroButtonsProps> = ({
       <Command size={18} color={tokens.colors.text.secondary} />
       
       <div style={{ 
-        borderLeft: `1px solid ${tokens.colors.border.default}`,
+        borderLeft: `1px solid ${tokens.colors.border.primary}`,
         height: '20px',
       }} />
       
@@ -562,7 +562,7 @@ export const CompactMacroButtons: React.FC<CompactMacroButtonsProps> = ({
               title={macro.description || macro.name}
               style={{ 
                 padding: showLabels ? undefined : tokens.spacing.xs,
-                backgroundColor: isExecuting ? tokens.colors.success.main : undefined,
+                backgroundColor: isExecuting ? tokens.colors.status.success : undefined,
                 color: macro.color || undefined,
               }}
             >
@@ -575,7 +575,7 @@ export const CompactMacroButtons: React.FC<CompactMacroButtonsProps> = ({
       {macros.length > maxButtons && (
         <>
           <div style={{ 
-            borderLeft: `1px solid ${tokens.colors.border.default}`,
+            borderLeft: `1px solid ${tokens.colors.border.primary}`,
             height: '20px',
           }} />
           <Badge variant="secondary" style={{ fontSize: tokens.text.size.xs[0] }}>

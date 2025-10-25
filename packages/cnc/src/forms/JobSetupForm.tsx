@@ -9,8 +9,9 @@ import React, { useState } from 'react';
 import { Form, Input, Select, Button, Card, Divider, Row, Col } from 'antd';
 const FormItem = Form.Item;
 import { 
-  required,
-  range
+  requiredRule,
+  rangeRule,
+  customRule
 } from '../validation';
 import { 
   PlayCircleOutlined,
@@ -99,7 +100,7 @@ export const JobSetupForm: React.FC<JobSetupFormProps> = ({
               name="jobName"
               label="Job Name"
               required
-              rules={[required('Job name is required')]}
+              rules={[requiredRule('Job name is required')]}
             >
               <Input placeholder="My CNC Project" />
             </FormItem>
@@ -109,7 +110,7 @@ export const JobSetupForm: React.FC<JobSetupFormProps> = ({
               name="gcodeFile"
               label="G-Code File"
               required
-              rules={[required('G-Code file is required')]}
+              rules={[requiredRule('G-Code file is required')]}
             >
               <Input placeholder="project.gcode" />
             </FormItem>
@@ -131,7 +132,7 @@ export const JobSetupForm: React.FC<JobSetupFormProps> = ({
               name={['material', 'type']}
               label="Material Type"
               required
-              rules={[required('Material type is required')]}
+              rules={[requiredRule('Material type is required')]}
             >
               <Select
                 options={[
@@ -152,8 +153,8 @@ export const JobSetupForm: React.FC<JobSetupFormProps> = ({
               label="Thickness (mm)"
               required
               rules={[
-                required('Material thickness is required'),
-                range(0.1, 100, 'Thickness must be between 0.1 and 100 mm')
+                requiredRule('Material thickness is required'),
+                rangeRule(0.1, 100, 'Thickness must be between 0.1 and 100 mm')
               ]}
             >
               <Input type="number" step="0.1" placeholder="6.35" />
@@ -168,8 +169,8 @@ export const JobSetupForm: React.FC<JobSetupFormProps> = ({
               label="Material Width (mm)"
               required
               rules={[
-                required('Material width is required'),
-                range(1, 1000, 'Width must be between 1 and 1000 mm')
+                requiredRule('Material width is required'),
+                rangeRule(1, 1000, 'Width must be between 1 and 1000 mm')
               ]}
             >
               <Input type="number" step="0.1" placeholder="200" />
@@ -181,8 +182,8 @@ export const JobSetupForm: React.FC<JobSetupFormProps> = ({
               label="Material Height (mm)"
               required
               rules={[
-                required('Material height is required'),
-                range(1, 1000, 'Height must be between 1 and 1000 mm')
+                requiredRule('Material height is required'),
+                rangeRule(1, 1000, 'Height must be between 1 and 1000 mm')
               ]}
             >
               <Input type="number" step="0.1" placeholder="150" />

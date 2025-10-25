@@ -9,8 +9,8 @@ import { cn } from '../utils';
 import { Card } from 'antd';
 import {
   getAnimatedCardShadowStyles,
-  getAnimatedCardGlowKeyframes,
   getAnimatedCardContainerStyles,
+  tokens,
 } from '../utils/tokens';
 
 export interface AnimatedCardProps {
@@ -23,7 +23,7 @@ export interface AnimatedCardProps {
   disabled?: boolean;
 }
 
-export const AnimatedCard = React.forwardRef<HTMLDivElement, AnimatedCardProps>(({ 
+export const AnimatedCard = React.forwardRef<HTMLDivElement, AnimatedCardProps>(({
   children,
   variant = 'default',
   delay = 0,
@@ -33,8 +33,47 @@ export const AnimatedCard = React.forwardRef<HTMLDivElement, AnimatedCardProps>(
   disabled = false,
 }, ref) => {
   const [isHovered, setIsHovered] = useState(false);
-  const [isPressed, setIsPressed] = useState(false);
-  
+
+  // For glow variant, use CSS animation instead of Framer Motion
+  if (variant === 'glow') {
+    return (
+      <div
+        ref={ref}
+        className={cn(className)}
+        style={{
+          animationDelay: `${delay}s`,
+          animation: 'glow-pulse 2s ease-in-out infinite',
+          borderRadius: tokens.radius.lg,
+          overflow: 'hidden',
+          ...getAnimatedCardContainerStyles(disabled),
+        }}
+      >
+        <style>
+          {`
+            @keyframes glow-pulse {
+              0%, 100% {
+                box-shadow: 0 0 20px 5px hsla(262, 83%, 58%, 0.8);
+              }
+              50% {
+                box-shadow: 0 0 30px 10px hsla(262, 83%, 58%, 0.4);
+              }
+            }
+          `}
+        </style>
+        <Card
+          className="h-full"
+          style={{
+            backgroundColor: tokens.colors.bg.secondary,
+            border: 'none',
+            color: tokens.colors.text.primary,
+          }}
+        >
+          {children}
+        </Card>
+      </div>
+    );
+  }
+
   const cardVariants: Variants = {
     initial: {
       scale: 1,
@@ -49,39 +88,38 @@ export const AnimatedCard = React.forwardRef<HTMLDivElement, AnimatedCardProps>(
       scale: variant === 'click' ? 0.98 : 1,
       transition: { duration: 0.1 },
     },
-    glow: {
-      boxShadow: getAnimatedCardGlowKeyframes(),
-      transition: { 
-        duration: 2,
-        repeat: Infinity,
-        repeatType: 'loop'
-      },
-    },
   };
-  
-  return (
-    <motion.div
-      ref={ref}
-      variants={cardVariants}
-      initial="initial"
-      animate={[
-        isHovered && !disabled ? 'hover' : 'initial',
-        variant === 'glow' ? 'glow' : ''
-      ].filter(Boolean)}
-      whileTap={!disabled ? 'tap' : undefined}
-      onHoverStart={() => setIsHovered(true)}
-      onHoverEnd={() => setIsHovered(false)}
-      onClick={!disabled ? onClick : undefined}
-      className={cn(className)}
-      style={{
+
+  // Use React.createElement to avoid JSX transform issues with motion.div
+  return React.createElement(
+    motion.div,
+    {
+      ref,
+      variants: cardVariants,
+      initial: "initial",
+      animate: isHovered && !disabled ? 'hover' : 'initial',
+      whileTap: !disabled ? 'tap' : undefined,
+      onHoverStart: () => setIsHovered(true),
+      onHoverEnd: () => setIsHovered(false),
+      onClick: !disabled ? onClick : undefined,
+      className: cn(className),
+      style: {
         animationDelay: `${delay}s`,
         ...getAnimatedCardContainerStyles(disabled),
-      }}
-    >
-      <Card className="h-full">
-        {children}
-      </Card>
-    </motion.div>
+      },
+    },
+    React.createElement(
+      Card,
+      {
+        className: "h-full",
+        style: {
+          backgroundColor: tokens.colors.bg.secondary,
+          borderColor: tokens.colors.border.primary,
+          color: tokens.colors.text.primary,
+        },
+      },
+      children
+    )
   );
 });
 

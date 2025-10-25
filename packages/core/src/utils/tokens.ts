@@ -1,8 +1,8 @@
 // Design token utilities for easy access across components
-import { 
-  darkThemeColors, 
-  componentTokens, 
-  fontSize, 
+import {
+  darkThemeColors,
+  componentTokens,
+  fontSize,
   fontWeight,
   fontFamily,
   lineHeight,
@@ -16,9 +16,11 @@ import {
 /**
  * Token access utilities for components
  * Provides easy access to design tokens with TypeScript safety
+ *
+ * NOTE: This is the legacy token structure used by UI library components.
+ * For the new comprehensive token system, import { tokens } from '@whttlr/ui-core'
  */
 
-// Color token utilities
 export const tokens = {
   colors: {
     // Background colors
@@ -3246,10 +3248,11 @@ export const getChartSubtitleStyles = (): React.CSSProperties => ({
  * Get chart tooltip styles using design tokens
  */
 export const getChartTooltipStyles = () => ({
-  backgroundColor: tokens.colors.bg.primary,
+  backgroundColor: tokens.colors.bg.secondary,
   border: `1px solid ${tokens.colors.border.primary}`,
   borderRadius: tokens.radius.md,
   boxShadow: tokens.shadows.lg,
+  color: tokens.colors.text.primary,
 });
 
 /**
@@ -3608,9 +3611,9 @@ export const getAnimatedCardShadowStyles = (variant: string, isHovered: boolean)
  * Get animated card glow animation keyframes using design tokens
  */
 export const getAnimatedCardGlowKeyframes = () => [
-  `0 0 0 0 ${tokens.colors.primary.main}66`, // 40% opacity start
-  `0 0 0 10px ${tokens.colors.primary.main}00`, // 0% opacity middle
-  `0 0 0 0 ${tokens.colors.primary.main}00`, // 0% opacity end
+  `0 0 20px 5px ${tokens.colors.primary.main}CC`, // 80% opacity start - stronger glow
+  `0 0 30px 10px ${tokens.colors.primary.main}66`, // 40% opacity middle - max spread
+  `0 0 20px 5px ${tokens.colors.primary.main}CC`, // 80% opacity end - back to start
 ];
 
 /**

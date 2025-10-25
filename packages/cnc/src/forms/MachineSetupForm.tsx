@@ -15,14 +15,15 @@ import {
   validateWorkingArea,
   validateIpAddress,
   validatePort,
-  required,
-  range
+  requiredRule,
+  rangeRule,
+  customRule
 } from '../validation';
 import { 
   SettingOutlined,
   HomeOutlined,
-  TargetOutlined,
-  SpeedOutlined,
+  AimOutlined,
+  DashboardOutlined,
   SafetyOutlined,
 } from '@ant-design/icons';
 
@@ -107,7 +108,7 @@ export const MachineSetupForm: React.FC<MachineSetupFormProps> = ({
                 name="machineId"
                 label="Machine ID"
                 required
-                rules={[required(), (value) => validateMachineId(value)]}
+                rules={[requiredRule(), customRule(validateMachineId)]}
                 tooltip="Unique identifier for this machine"
               >
                 <Input placeholder="cnc-001" />
@@ -118,7 +119,7 @@ export const MachineSetupForm: React.FC<MachineSetupFormProps> = ({
                 name="machineName"
                 label="Display Name"
                 required
-                rules={[required('Display name is required')]}
+                rules={[requiredRule('Display name is required')]}
               >
                 <Input placeholder="Main CNC Router" />
               </FormItem>
@@ -131,7 +132,7 @@ export const MachineSetupForm: React.FC<MachineSetupFormProps> = ({
                 name="machineType"
                 label="Machine Type"
                 required
-                rules={[required()]}
+                rules={[requiredRule()]}
               >
                 <Select
                   placeholder="Select machine type"
@@ -169,7 +170,7 @@ export const MachineSetupForm: React.FC<MachineSetupFormProps> = ({
       key: 'area',
       label: (
         <span>
-          <TargetOutlined />
+          <AimOutlined />
           Working Area
         </span>
       ),
@@ -189,7 +190,7 @@ export const MachineSetupForm: React.FC<MachineSetupFormProps> = ({
                 name={['workingArea', 'width']}
                 label="Width (X-axis)"
                 required
-                rules={[required(), range(0.1, 10000, 'Width must be between 0.1 and 10000')]}
+                rules={[requiredRule(), rangeRule(0.1, 10000, 'Width must be between 0.1 and 10000')]}
               >
                 <Input type="number" step="0.001" placeholder="0.000" suffix="mm" />
               </FormItem>
@@ -199,7 +200,7 @@ export const MachineSetupForm: React.FC<MachineSetupFormProps> = ({
                 name={['workingArea', 'height']}
                 label="Height (Y-axis)"
                 required
-                rules={[required(), range(0.1, 10000, 'Height must be between 0.1 and 10000')]}
+                rules={[requiredRule(), rangeRule(0.1, 10000, 'Height must be between 0.1 and 10000')]}
               >
                 <Input type="number" step="0.001" placeholder="0.000" suffix="mm" />
               </FormItem>
@@ -209,7 +210,7 @@ export const MachineSetupForm: React.FC<MachineSetupFormProps> = ({
                 name={['workingArea', 'depth']}
                 label="Depth (Z-axis)"
                 required
-                rules={[required(), range(0.1, 1000, 'Depth must be between 0.1 and 1000')]}
+                rules={[requiredRule(), rangeRule(0.1, 1000, 'Depth must be between 0.1 and 1000')]}
               >
                 <Input type="number" step="0.001" placeholder="0.000" suffix="mm" />
               </FormItem>
@@ -219,7 +220,7 @@ export const MachineSetupForm: React.FC<MachineSetupFormProps> = ({
                 name={['workingArea', 'units']}
                 label="Units"
                 required
-                rules={[required()]}
+                rules={[requiredRule()]}
               >
                 <Select
                   placeholder="Select units"
@@ -265,7 +266,7 @@ export const MachineSetupForm: React.FC<MachineSetupFormProps> = ({
                 name={['connection', 'type']}
                 label="Connection Type"
                 required
-                rules={[required()]}
+                rules={[requiredRule()]}
               >
                 <Select
                   placeholder="Select connection type"
@@ -300,7 +301,7 @@ export const MachineSetupForm: React.FC<MachineSetupFormProps> = ({
               <FormItem
                 name={['connection', 'baudRate']}
                 label="Baud Rate"
-                rules={[range(300, 921600, 'Invalid baud rate')]}
+                rules={[rangeRule(300, 921600, 'Invalid baud rate')]}
               >
                 <Select
                   placeholder="115200"
@@ -327,7 +328,7 @@ export const MachineSetupForm: React.FC<MachineSetupFormProps> = ({
                   name={['connection', 'ipAddress']}
                   label="IP Address"
                   required
-                  rules={[required(), (value) => validateIpAddress(value)]}
+                  rules={[requiredRule(), customRule(validateIpAddress)]}
                 >
                   <Input placeholder="192.168.1.100" />
                 </FormItem>
@@ -337,7 +338,7 @@ export const MachineSetupForm: React.FC<MachineSetupFormProps> = ({
                   name={['connection', 'tcpPort']}
                   label="TCP Port"
                   required
-                  rules={[required(), (value) => validatePort(value)]}
+                  rules={[requiredRule(), customRule(validatePort)]}
                 >
                   <Input placeholder="23" />
                 </FormItem>
@@ -359,7 +360,7 @@ export const MachineSetupForm: React.FC<MachineSetupFormProps> = ({
       key: 'movement',
       label: (
         <span>
-          <SpeedOutlined />
+          <DashboardOutlined />
           Movement
         </span>
       ),
@@ -379,7 +380,7 @@ export const MachineSetupForm: React.FC<MachineSetupFormProps> = ({
                 name={['movement', 'maxFeedRate']}
                 label="Maximum Feed Rate"
                 required
-                rules={[required(), range(1, 50000, 'Feed rate must be between 1 and 50000 mm/min')]}
+                rules={[requiredRule(), rangeRule(1, 50000, 'Feed rate must be between 1 and 50000 mm/min')]}
                 tooltip="Maximum cutting feed rate in mm/min"
               >
                 <Input type="number" step="1" placeholder="1000" suffix="mm/min" />
@@ -390,7 +391,7 @@ export const MachineSetupForm: React.FC<MachineSetupFormProps> = ({
                 name={['movement', 'defaultFeedRate']}
                 label="Default Feed Rate"
                 required
-                rules={[required(), range(1, 5000, 'Default feed rate must be between 1 and 5000 mm/min')]}
+                rules={[requiredRule(), rangeRule(1, 5000, 'Default feed rate must be between 1 and 5000 mm/min')]}
                 tooltip="Default cutting feed rate in mm/min"
               >
                 <Input type="number" step="1" placeholder="1000" suffix="mm/min" />
@@ -404,7 +405,7 @@ export const MachineSetupForm: React.FC<MachineSetupFormProps> = ({
                 name={['movement', 'rapidSpeed']}
                 label="Rapid Speed"
                 required
-                rules={[required(), range(1, 50000, 'Rapid speed must be between 1 and 50000 mm/min')]}
+                rules={[requiredRule(), rangeRule(1, 50000, 'Rapid speed must be between 1 and 50000 mm/min')]}
                 tooltip="Rapid positioning speed in mm/min"
               >
                 <Input type="number" step="1" placeholder="1000" suffix="mm/min" />
@@ -415,7 +416,7 @@ export const MachineSetupForm: React.FC<MachineSetupFormProps> = ({
                 name={['movement', 'jogSpeed']}
                 label="Jog Speed"
                 required
-                rules={[required(), range(1, 10000, 'Jog speed must be between 1 and 10000 mm/min')]}
+                rules={[requiredRule(), rangeRule(1, 10000, 'Jog speed must be between 1 and 10000 mm/min')]}
                 tooltip="Manual jogging speed in mm/min"
               >
                 <Input type="number" step="1" placeholder="1000" suffix="mm/min" />
@@ -429,7 +430,7 @@ export const MachineSetupForm: React.FC<MachineSetupFormProps> = ({
                 name={['movement', 'jogStepSize']}
                 label="Jog Step Size"
                 required
-                rules={[required(), range(0.001, 100, 'Step size must be between 0.001 and 100 mm')]}
+                rules={[requiredRule(), rangeRule(0.001, 100, 'Step size must be between 0.001 and 100 mm')]}
                 tooltip="Default jog increment in mm"
               >
                 <Input type="number" step="0.001" placeholder="0.000" suffix="mm" />
@@ -505,7 +506,7 @@ export const MachineSetupForm: React.FC<MachineSetupFormProps> = ({
               <FormItem
                 name={['safety', 'maxSpindleSpeed']}
                 label="Max Spindle Speed"
-                rules={[range(0, 50000, 'Max spindle speed must be between 0 and 50000 RPM')]}
+                rules={[rangeRule(0, 50000, 'Max spindle speed must be between 0 and 50000 RPM')]}
                 tooltip="Maximum spindle speed in RPM (optional)"
               >
                 <Input placeholder="15000" suffix="RPM" />

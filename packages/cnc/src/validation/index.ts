@@ -570,6 +570,71 @@ export function range(
 }
 
 // ============================================================================
+// ANT DESIGN FORM RULE ADAPTERS
+// ============================================================================
+
+/**
+ * Convert ValidationResult to Ant Design Rule format
+ * This ensures compatibility with Ant Design Form component
+ */
+export function toFormRule(
+  validator: (value: any) => ValidationResult
+): any {
+  return {
+    validator: (_: any, value: any) => {
+      const result = validator(value);
+      if (!result.isValid) {
+        return Promise.reject(new Error(result.message || 'Validation failed'));
+      }
+      return Promise.resolve();
+    }
+  };
+}
+
+/**
+ * Create Ant Design-compatible required field rule
+ */
+export function requiredRule(message = 'This field is required'): any {
+  return {
+    required: true,
+    message
+  };
+}
+
+/**
+ * Create Ant Design-compatible range validation rule
+ */
+export function rangeRule(
+  min: number,
+  max: number,
+  message?: string
+): any {
+  return {
+    validator: (_: any, value: any) => {
+      const num = typeof value === 'string' ? parseFloat(value) : value;
+      if (value !== undefined && value !== null && value !== '') {
+        if (isNaN(num)) {
+          return Promise.reject(new Error('Must be a valid number'));
+        }
+        if (num < min || num > max) {
+          return Promise.reject(new Error(message || `Value must be between ${min} and ${max}`));
+        }
+      }
+      return Promise.resolve();
+    }
+  };
+}
+
+/**
+ * Create Ant Design-compatible custom validation rule
+ */
+export function customRule(
+  validator: (value: any) => ValidationResult
+): any {
+  return toFormRule(validator);
+}
+
+// ============================================================================
 // EXPORTS
 // ============================================================================
 
@@ -586,4 +651,9 @@ export default {
   createValidator,
   required,
   range,
+  // Ant Design Form Rule adapters
+  toFormRule,
+  requiredRule,
+  rangeRule,
+  customRule,
 };

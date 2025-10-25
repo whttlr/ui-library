@@ -1,12 +1,12 @@
 import * as React from 'react';
 import {
-  tokens,
   getGridGapStyles,
   getFlexGapStyles,
   getContainerSizeStyles,
   getContainerPaddingStyles,
   getStackSpacingStyles,
 } from '../../utils/tokens';
+import { tokens } from '../../tokens';
 
 export interface GridProps extends React.HTMLAttributes<HTMLDivElement> {
   cols?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
@@ -281,7 +281,236 @@ const Stack = React.forwardRef<HTMLDivElement, StackProps>(
 );
 Stack.displayName = 'Stack';
 
+// 12-Column Responsive Grid System
+export interface ResponsiveGridProps extends React.HTMLAttributes<HTMLDivElement> {
+  cols?: 1 | 2 | 3 | 4 | 6 | 12; // Common divisors of 12
+  gap?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  rowGap?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  padding?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  responsive?: boolean; // Auto-adjust columns on mobile
+}
+
+const ResponsiveGrid = React.forwardRef<HTMLDivElement, ResponsiveGridProps>(
+  ({
+    className,
+    cols = 1,
+    gap = 'md',
+    rowGap,
+    padding = 'md',
+    responsive = true,
+    style,
+    ...props
+  }, ref) => {
+    // Dynamic padding based on column count
+    // More columns = more padding for visual breathing room
+    const getPaddingForCols = (): string => {
+      if (padding === 'none') return '0';
+
+      const basePadding = {
+        xs: tokens.spacing.xs,
+        sm: tokens.spacing.sm,
+        md: tokens.spacing.md,
+        lg: tokens.spacing.base,
+        xl: tokens.spacing.lg,
+      }[padding] || tokens.spacing.md;
+
+      // Increase padding for multi-column layouts
+      if (cols >= 3) {
+        return tokens.spacing.xl; // More padding for 3+ columns (2rem)
+      } else if (cols === 2) {
+        return tokens.spacing.lg; // Medium padding for 2 columns (1.5rem)
+      }
+      return basePadding; // Base padding for single column
+    };
+
+    const getGapSize = (gapSize: string): string => {
+      return {
+        none: '0',
+        xs: tokens.spacing.xs,
+        sm: tokens.spacing.sm,
+        md: tokens.spacing.md,
+        lg: tokens.spacing.lg,
+        xl: tokens.spacing.xl,
+      }[gapSize] || tokens.spacing.md;
+    };
+
+    const gridStyles: React.CSSProperties = {
+      display: 'grid',
+      gridTemplateColumns: `repeat(${cols}, 1fr)`,
+      gap: rowGap ? `${getGapSize(rowGap)} ${getGapSize(gap)}` : getGapSize(gap),
+      padding: getPaddingForCols(),
+      ...style,
+    };
+
+    // Note: Responsive behavior would require CSS classes or media queries
+    // For now, using static grid columns. Consider adding className support.
+
+    return (
+      <div
+        ref={ref}
+        className={className}
+        style={gridStyles}
+        {...props}
+      />
+    );
+  },
+);
+ResponsiveGrid.displayName = 'ResponsiveGrid';
+
+// Grid Column Component (for 12-column system)
+export interface GridColProps extends React.HTMLAttributes<HTMLDivElement> {
+  span?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12; // How many columns to span
+  offset?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11; // How many columns to offset
+  sm?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12; // Span on small screens
+  md?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12; // Span on medium screens
+  lg?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12; // Span on large screens
+}
+
+const GridCol = React.forwardRef<HTMLDivElement, GridColProps>(
+  ({
+    className,
+    span = 12,
+    offset = 0,
+    sm,
+    md,
+    lg,
+    style,
+    ...props
+  }, ref) => {
+    const colStyles: React.CSSProperties = {
+      gridColumn: `span ${span}`,
+      gridColumnStart: offset > 0 ? offset + 1 : undefined,
+      ...style,
+    };
+
+    return (
+      <div
+        ref={ref}
+        className={className}
+        style={colStyles}
+        {...props}
+      />
+    );
+  },
+);
+GridCol.displayName = 'GridCol';
+
+// Button width utilities
+export interface GridButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  fullWidth?: boolean; // 100% width minus card padding
+  halfWidth?: boolean; // 50% width for side-by-side buttons
+  variant?: 'primary' | 'secondary' | 'danger' | 'success';
+}
+
+const GridButton = React.forwardRef<HTMLButtonElement, GridButtonProps>(
+  ({
+    className,
+    fullWidth = false,
+    halfWidth = false,
+    variant = 'primary',
+    style,
+    ...props
+  }, ref) => {
+    const getVariantStyles = (): React.CSSProperties => {
+      const variants = {
+        primary: {
+          backgroundColor: tokens.colors.cnc.primary,
+          color: tokens.colors.text.primary,
+          border: 'none',
+        },
+        secondary: {
+          backgroundColor: tokens.colors.bg.secondary,
+          color: tokens.colors.text.primary,
+          border: `1px solid ${tokens.colors.border.default}`,
+        },
+        danger: {
+          backgroundColor: tokens.colors.bg.error,
+          color: tokens.colors.text.primary,
+          border: 'none',
+        },
+        success: {
+          backgroundColor: tokens.colors.bg.success,
+          color: tokens.colors.text.primary,
+          border: 'none',
+        },
+      };
+      return variants[variant];
+    };
+
+    const buttonStyles: React.CSSProperties = {
+      padding: `${tokens.spacing.sm} ${tokens.spacing.lg}`,
+      borderRadius: tokens.radius.base,
+      fontSize: tokens.typography.fontSize.base,
+      fontWeight: tokens.typography.fontWeight.medium,
+      cursor: 'pointer',
+      transition: tokens.transitions.all,
+      width: fullWidth ? '100%' : halfWidth ? 'calc(50% - 0.25rem)' : 'auto',
+      ...getVariantStyles(),
+      ...style,
+    };
+
+    return (
+      <button
+        ref={ref}
+        className={className}
+        style={buttonStyles}
+        {...props}
+      />
+    );
+  },
+);
+GridButton.displayName = 'GridButton';
+
+// Card Footer Component (ignores card inner padding)
+export interface CardFooterProps extends React.HTMLAttributes<HTMLDivElement> {
+  sticky?: boolean; // Stick to bottom of card
+  borderTop?: boolean; // Add top border separator
+}
+
+const CardFooter = React.forwardRef<HTMLDivElement, CardFooterProps>(
+  ({
+    className,
+    sticky = false,
+    borderTop = true,
+    style,
+    ...props
+  }, ref) => {
+    const footerStyles: React.CSSProperties = {
+      // Negative margins to escape card padding (assuming card uses lg padding)
+      marginLeft: `-${tokens.spacing.lg}`,
+      marginRight: `-${tokens.spacing.lg}`,
+      marginBottom: `-${tokens.spacing.lg}`,
+      // Add back padding for content
+      padding: tokens.spacing.lg,
+      borderTop: borderTop ? `1px solid ${tokens.colors.border.default}` : 'none',
+      backgroundColor: tokens.colors.bg.secondary,
+      borderBottomLeftRadius: tokens.radius.base,
+      borderBottomRightRadius: tokens.radius.base,
+      // Sticky positioning if requested
+      ...(sticky ? {
+        position: 'sticky',
+        bottom: 0,
+        zIndex: 10,
+      } as React.CSSProperties : {}),
+      ...style,
+    };
+
+    return (
+      <div
+        ref={ref}
+        className={className}
+        style={footerStyles}
+        {...props}
+      />
+    );
+  },
+);
+CardFooter.displayName = 'CardFooter';
+
 export {
   Grid, GridItem, DashboardGrid, ControlGrid, JogGrid,
-  Flex, Container, Stack,
+  Flex, Stack,
+  ResponsiveGrid, GridCol, GridButton, CardFooter,
 };
+
+// Note: Container is exported from primitives/Container instead to avoid naming conflicts

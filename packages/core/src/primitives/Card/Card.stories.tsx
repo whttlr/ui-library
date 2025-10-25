@@ -735,3 +735,342 @@ export const AllVariants: Story = {
     },
   },
 };
+
+// Enhanced CardFooter examples
+export const CardFooterBasic: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', maxWidth: '600px' }}>
+      <Card noPadding>
+        <CardHeader>
+          <CardTitle>Default Footer</CardTitle>
+          <CardDescription>Footer with default settings (bordered, left aligned)</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p style={{ color: 'hsl(240, 5%, 64.9%)', margin: 0 }}>
+            Card content goes here. The footer will be separated with a border.
+          </p>
+        </CardContent>
+        <CardFooter>
+          <Button variant="outline">Cancel</Button>
+          <Button variant="primary">Submit</Button>
+        </CardFooter>
+      </Card>
+
+      <Card noPadding>
+        <CardHeader>
+          <CardTitle>Footer Without Border</CardTitle>
+          <CardDescription>Footer with bordered=false</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p style={{ color: 'hsl(240, 5%, 64.9%)', margin: 0 }}>
+            Card content goes here. No border separator between content and footer.
+          </p>
+        </CardContent>
+        <CardFooter bordered={false}>
+          <Button variant="outline">Cancel</Button>
+          <Button variant="primary">Submit</Button>
+        </CardFooter>
+      </Card>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Basic CardFooter usage with border options',
+      },
+    },
+  },
+};
+
+export const CardFooterAlignment: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', maxWidth: '600px' }}>
+      <Card noPadding>
+        <CardHeader>
+          <CardTitle>Left Aligned Footer</CardTitle>
+          <CardDescription>Default alignment (align="left")</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p style={{ color: 'hsl(240, 5%, 64.9%)', margin: 0 }}>Card content goes here.</p>
+        </CardContent>
+        <CardFooter align="left">
+          <Button variant="outline">Cancel</Button>
+          <Button variant="primary">Submit</Button>
+        </CardFooter>
+      </Card>
+
+      <Card noPadding>
+        <CardHeader>
+          <CardTitle>Center Aligned Footer</CardTitle>
+          <CardDescription>align="center"</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p style={{ color: 'hsl(240, 5%, 64.9%)', margin: 0 }}>Card content goes here.</p>
+        </CardContent>
+        <CardFooter align="center">
+          <Button variant="outline">Cancel</Button>
+          <Button variant="primary">Submit</Button>
+        </CardFooter>
+      </Card>
+
+      <Card noPadding>
+        <CardHeader>
+          <CardTitle>Right Aligned Footer</CardTitle>
+          <CardDescription>align="right" (common for forms)</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p style={{ color: 'hsl(240, 5%, 64.9%)', margin: 0 }}>Card content goes here.</p>
+        </CardContent>
+        <CardFooter align="right">
+          <Button variant="outline">Cancel</Button>
+          <Button variant="primary">Submit</Button>
+        </CardFooter>
+      </Card>
+
+      <Card noPadding>
+        <CardHeader>
+          <CardTitle>Space Between Footer</CardTitle>
+          <CardDescription>align="space-between" (common for wizards)</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p style={{ color: 'hsl(240, 5%, 64.9%)', margin: 0 }}>Card content goes here.</p>
+        </CardContent>
+        <CardFooter align="space-between">
+          <Button variant="outline">Back</Button>
+          <Button variant="primary">Next</Button>
+        </CardFooter>
+      </Card>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'CardFooter alignment options for different layouts',
+      },
+    },
+  },
+};
+
+export const CardFooterSticky: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
+      <Card noPadding style={{ width: '300px', height: '500px', display: 'flex', flexDirection: 'column' }}>
+        <CardHeader>
+          <CardTitle>Sticky Footer</CardTitle>
+          <CardDescription>Footer sticks to bottom</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p style={{ color: 'hsl(240, 5%, 64.9%)', margin: '0 0 1rem 0' }}>
+            This card has limited content, but the footer stays at the bottom due to sticky=true.
+          </p>
+          <p style={{ color: 'hsl(240, 5%, 64.9%)', margin: 0 }}>
+            Perfect for cards with variable content heights.
+          </p>
+        </CardContent>
+        <CardFooter sticky align="right">
+          <Button variant="outline">Cancel</Button>
+          <Button variant="primary">Submit</Button>
+        </CardFooter>
+      </Card>
+
+      <Card noPadding style={{ width: '300px', height: '500px', display: 'flex', flexDirection: 'column' }}>
+        <CardHeader>
+          <CardTitle>Non-Sticky Footer</CardTitle>
+          <CardDescription>Footer follows content</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p style={{ color: 'hsl(240, 5%, 64.9%)', margin: '0 0 1rem 0' }}>
+            This card has the same limited content, but without sticky=true, the footer appears right after the content.
+          </p>
+          <p style={{ color: 'hsl(240, 5%, 64.9%)', margin: 0 }}>
+            Notice the difference in footer position.
+          </p>
+        </CardContent>
+        <CardFooter align="right">
+          <Button variant="outline">Cancel</Button>
+          <Button variant="primary">Submit</Button>
+        </CardFooter>
+      </Card>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Sticky footer option to attach footer to bottom of card container',
+      },
+    },
+  },
+};
+
+export const CardFooterNoPadding: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', maxWidth: '600px' }}>
+      <Card noPadding>
+        <CardHeader>
+          <CardTitle>Full-Width Footer Button</CardTitle>
+          <CardDescription>Footer with noPadding=true for edge-to-edge content</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p style={{ color: 'hsl(240, 5%, 64.9%)', margin: 0 }}>
+            The footer has no padding, allowing the button to extend to the edges.
+          </p>
+        </CardContent>
+        <CardFooter noPadding>
+          <Button variant="primary" style={{ width: '100%', borderRadius: 0, borderBottomLeftRadius: '6px', borderBottomRightRadius: '6px' }}>
+            Add to Cart
+          </Button>
+        </CardFooter>
+      </Card>
+
+      <Card noPadding>
+        <CardHeader>
+          <CardTitle>Product Card</CardTitle>
+          <CardDescription>$99.99</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p style={{ color: 'hsl(240, 5%, 64.9%)', margin: 0 }}>
+            Premium quality product with exceptional features and benefits.
+          </p>
+        </CardContent>
+        <CardFooter noPadding>
+          <div style={{ display: 'flex', width: '100%' }}>
+            <Button variant="outline" style={{ flex: 1, borderRadius: 0, borderBottomLeftRadius: '6px' }}>
+              Details
+            </Button>
+            <Button variant="primary" style={{ flex: 1, borderRadius: 0, borderBottomRightRadius: '6px' }}>
+              Buy Now
+            </Button>
+          </div>
+        </CardFooter>
+      </Card>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Footer with no padding for full-width buttons and content',
+      },
+    },
+  },
+};
+
+export const CardFooterRealWorld: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
+      {/* Form Card */}
+      <Card noPadding style={{ width: '400px' }}>
+        <CardHeader>
+          <CardTitle>Edit Profile</CardTitle>
+          <CardDescription>Update your profile information</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <div>
+              <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: 'hsl(0, 0%, 98%)' }}>
+                Name
+              </label>
+              <input
+                type="text"
+                defaultValue="John Doe"
+                style={{
+                  width: '100%',
+                  padding: '0.5rem',
+                  backgroundColor: 'hsl(240, 10%, 10%)',
+                  border: '1px solid hsl(240, 3.7%, 15.9%)',
+                  borderRadius: '6px',
+                  color: 'hsl(0, 0%, 98%)',
+                  fontSize: '0.875rem',
+                }}
+              />
+            </div>
+            <div>
+              <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: 'hsl(0, 0%, 98%)' }}>
+                Email
+              </label>
+              <input
+                type="email"
+                defaultValue="john@example.com"
+                style={{
+                  width: '100%',
+                  padding: '0.5rem',
+                  backgroundColor: 'hsl(240, 10%, 10%)',
+                  border: '1px solid hsl(240, 3.7%, 15.9%)',
+                  borderRadius: '6px',
+                  color: 'hsl(0, 0%, 98%)',
+                  fontSize: '0.875rem',
+                }}
+              />
+            </div>
+          </div>
+        </CardContent>
+        <CardFooter align="right">
+          <Button variant="outline">Cancel</Button>
+          <Button variant="primary">Save Changes</Button>
+        </CardFooter>
+      </Card>
+
+      {/* Confirmation Modal */}
+      <Card noPadding style={{ width: '400px' }}>
+        <CardHeader>
+          <CardTitle>Delete Item</CardTitle>
+          <CardDescription>Are you sure you want to delete this item?</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p style={{ color: 'hsl(240, 5%, 64.9%)', margin: 0 }}>
+            This action cannot be undone. The item will be permanently removed from your account.
+          </p>
+        </CardContent>
+        <CardFooter align="space-between">
+          <Button variant="outline">Cancel</Button>
+          <Button variant="primary">Delete</Button>
+        </CardFooter>
+      </Card>
+
+      {/* Wizard Step */}
+      <Card noPadding style={{ width: '400px' }}>
+        <CardHeader>
+          <CardTitle>Setup Wizard</CardTitle>
+          <CardDescription>Step 2 of 3: Configure Settings</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p style={{ color: 'hsl(240, 5%, 64.9%)', margin: 0 }}>
+            Choose your preferred configuration options to continue.
+          </p>
+        </CardContent>
+        <CardFooter align="space-between">
+          <Button variant="outline">Back</Button>
+          <div style={{ display: 'flex', gap: '0.5rem' }}>
+            <Button variant="outline">Skip</Button>
+            <Button variant="primary">Next</Button>
+          </div>
+        </CardFooter>
+      </Card>
+
+      {/* Product Card with Sticky Footer */}
+      <Card noPadding style={{ width: '300px', height: '400px', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ height: '150px', backgroundColor: 'hsl(240, 10%, 10%)', borderTopLeftRadius: '6px', borderTopRightRadius: '6px' }} />
+        <CardHeader>
+          <CardTitle>Premium Widget</CardTitle>
+          <CardDescription>$149.99</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p style={{ color: 'hsl(240, 5%, 64.9%)', margin: 0, fontSize: '0.875rem' }}>
+            High-quality widget with advanced features.
+          </p>
+        </CardContent>
+        <CardFooter sticky noPadding>
+          <Button variant="primary" style={{ width: '100%', borderRadius: 0, borderBottomLeftRadius: '6px', borderBottomRightRadius: '6px' }}>
+            Add to Cart
+          </Button>
+        </CardFooter>
+      </Card>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Real-world examples of CardFooter in common use cases',
+      },
+    },
+  },
+};

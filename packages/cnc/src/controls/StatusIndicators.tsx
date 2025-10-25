@@ -12,7 +12,7 @@ import {
   Thermometer,
   Timer,
 } from 'lucide-react';
-import { cn, StatusBadge, Card, CardContent } from '@whttlr/ui-core';
+import { cn, StatusBadge, Card, CardContent, legacyTokens as tokens } from '@whttlr/ui-core';
 
 export type MachineStatus = 'connected' | 'disconnected' | 'idle' | 'running' | 'error' | 'warning'
 
@@ -34,38 +34,44 @@ export const StatusIndicator: React.FC<StatusIndicatorProps> = ({
   const statusConfig = {
     connected: {
       icon: Wifi,
-      color: 'text-success-600',
-      bgColor: 'bg-success-100',
+      iconColor: '#16a34a',
+      bgColor: 'transparent',
+      borderColor: '#16a34a',
       label: label || 'Connected',
     },
     disconnected: {
       icon: WifiOff,
-      color: 'text-danger-600',
-      bgColor: 'bg-danger-100',
+      iconColor: '#dc2626',
+      bgColor: 'transparent',
+      borderColor: '#dc2626',
       label: label || 'Disconnected',
     },
     idle: {
       icon: Activity,
-      color: 'text-warning-600',
-      bgColor: 'bg-warning-100',
+      iconColor: '#d97706',
+      bgColor: 'transparent',
+      borderColor: '#d97706',
       label: label || 'Idle',
     },
     running: {
       icon: Zap,
-      color: 'text-primary-600',
-      bgColor: 'bg-primary-100',
+      iconColor: 'hsl(262, 83%, 58%)',
+      bgColor: 'transparent',
+      borderColor: 'hsl(262, 83%, 58%)',
       label: label || 'Running',
     },
     error: {
       icon: XCircle,
-      color: 'text-danger-600',
-      bgColor: 'bg-danger-100',
+      iconColor: '#dc2626',
+      bgColor: 'transparent',
+      borderColor: '#dc2626',
       label: label || 'Error',
     },
     warning: {
       icon: AlertTriangle,
-      color: 'text-warning-600',
-      bgColor: 'bg-warning-100',
+      iconColor: '#d97706',
+      bgColor: 'transparent',
+      borderColor: '#d97706',
       label: label || 'Warning',
     },
   };
@@ -73,34 +79,63 @@ export const StatusIndicator: React.FC<StatusIndicatorProps> = ({
   const config = statusConfig[status];
   const Icon = config.icon;
 
-  const sizeClasses = {
-    sm: 'text-xs',
-    md: 'text-sm',
-    lg: 'text-base',
+  const sizeConfig = {
+    sm: {
+      fontSize: tokens.text.size.xs,
+      iconSize: 14,
+      padding: '6px 12px',
+      gap: '12px',
+    },
+    md: {
+      fontSize: tokens.text.size.sm,
+      iconSize: 16,
+      padding: '8px 16px',
+      gap: '12px',
+    },
+    lg: {
+      fontSize: tokens.text.size.base,
+      iconSize: 20,
+      padding: '10px 20px',
+      gap: '14px',
+    },
   };
 
-  const iconSizes = {
-    sm: 'h-3 w-3',
-    md: 'h-4 w-4',
-    lg: 'h-5 w-5',
-  };
+  const currentSize = sizeConfig[size];
 
   return (
-    <div className={cn(
-      'inline-flex items-center gap-2 px-3 py-1.5 rounded-full',
-      config.bgColor,
-      sizeClasses[size],
-      className,
-    )}>
+    <div 
+      className={cn('inline-flex items-center rounded-full', className)}
+      style={{
+        backgroundColor: config.bgColor,
+        border: `1px solid ${config.borderColor}`,
+        padding: currentSize.padding,
+        gap: currentSize.gap,
+      }}
+    >
       {showIcon && (
         <motion.div
+          style={{ 
+            display: 'inline-flex', 
+            alignItems: 'center',
+            justifyContent: 'center',
+            transformOrigin: 'center center',
+            lineHeight: 0,
+            color: config.iconColor,
+          }}
           animate={status === 'running' ? { rotate: 360 } : {}}
           transition={status === 'running' ? { duration: 2, repeat: Infinity, ease: 'linear' } : {}}
         >
-          <Icon className={cn(iconSizes[size], config.color)} />
+          <Icon size={currentSize.iconSize} strokeWidth={2} />
         </motion.div>
       )}
-      <span className={cn('font-medium', config.color)}>
+      <span 
+        style={{
+          fontSize: Array.isArray(currentSize.fontSize) ? currentSize.fontSize[0] : currentSize.fontSize,
+          fontWeight: tokens.text.weight.medium,
+          color: config.iconColor,
+          lineHeight: 1,
+        }}
+      >
         {config.label}
       </span>
     </div>
@@ -120,24 +155,17 @@ export const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
   baudRate,
   className,
 }) => (
-    <Card className={cn('overflow-hidden', className)}>
-      <div className={cn(
-        'px-4 py-2 border-b',
-        isConnected ? 'bg-success-50 border-success-200' : 'bg-danger-50 border-danger-200',
-      )}>
-        <div className="flex items-center justify-between">
-          <StatusIndicator
-            status={isConnected ? 'connected' : 'disconnected'}
-            size="sm"
-          />
-          {isConnected && port && (
-            <span className="text-xs text-muted-foreground font-mono">
-              {port} @ {baudRate || 115200}
-            </span>
-          )}
-        </div>
-      </div>
-    </Card>
+  <div className={cn('flex items-center gap-3', className)}>
+    <StatusIndicator
+      status={isConnected ? 'connected' : 'disconnected'}
+      size="md"
+    />
+    {isConnected && port && (
+      <span className="text-xs text-muted-foreground font-mono">
+        {port} @ {baudRate || 115200}
+      </span>
+    )}
+  </div>
 );
 
 export interface MetricDisplayProps {
@@ -166,10 +194,10 @@ export const MetricDisplay: React.FC<MetricDisplayProps> = ({
   return (
     <div className={cn('flex items-center gap-3 p-3 rounded-lg bg-muted/50', className)}>
       <div className={cn(
-        'p-2 rounded-full',
-        status === 'normal' && 'bg-primary-100 text-primary-600',
-        status === 'warning' && 'bg-warning-100 text-warning-600',
-        status === 'danger' && 'bg-danger-100 text-danger-600',
+        'flex items-center justify-center',
+        status === 'normal' && 'text-primary-600',
+        status === 'warning' && 'text-warning-600',
+        status === 'danger' && 'text-danger-600',
       )}>
         <Icon className="h-5 w-5" />
       </div>

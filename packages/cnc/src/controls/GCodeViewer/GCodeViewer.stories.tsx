@@ -276,7 +276,7 @@ export const WithProgramExecution: Story = {
               </Button>
               
               <Button
-                variant="outline"
+                variant="outline-default"
                 onClick={handleSingleStep}
                 disabled={isRunning && !isPaused}
                 leftIcon={<SkipForward size={16} />}
@@ -402,7 +402,7 @@ export const CompactVersion: Story = {
         </h4>
         <CompactGCodeViewer code={sampleGCode} maxLines={8} />
         <Button 
-          variant="outline" 
+          variant="outline-default" 
           size="sm" 
           style={{ marginTop: '1rem', width: '100%' }}
         >
@@ -529,7 +529,7 @@ export const ProgramLibrary: Story = {
               </span>
             </div>
             <div style={{ display: 'flex', gap: '0.5rem' }}>
-              <Button variant="outline" size="sm">Edit</Button>
+              <Button variant="outline-default" size="sm">Edit</Button>
               <Button variant="default" size="sm">Load</Button>
             </div>
           </Card>

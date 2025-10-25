@@ -5,7 +5,7 @@ import {
   Gauge,
   AlertTriangle 
 } from 'lucide-react';
-import { Button, tokens, SliderInput, cn } from '@whttlr/ui-core';
+import { Button, legacyTokens as tokens, SliderInput, cn } from '@whttlr/ui-core';
 
 export interface SpindleSpeedControlProps {
   currentSpeed: number
@@ -49,7 +49,7 @@ export const SpindleSpeedControl: React.FC<SpindleSpeedControlProps> = ({
   const containerStyles: React.CSSProperties = {
     backgroundColor: tokens.colors.bg.secondary,
     borderRadius: tokens.radius.lg,
-    border: `1px solid ${tokens.colors.border.default}`,
+    border: `1px solid ${tokens.colors.border.primary}`,
     padding: tokens.spacing.lg,
   };
 
@@ -263,7 +263,7 @@ export const CompactSpindleControl: React.FC<CompactSpindleControlProps> = ({
     padding: tokens.spacing.md,
     backgroundColor: tokens.colors.bg.secondary,
     borderRadius: tokens.radius.md,
-    border: `1px solid ${tokens.colors.border.default}`,
+    border: `1px solid ${tokens.colors.border.primary}`,
   };
 
   const speedStyles: React.CSSProperties = {

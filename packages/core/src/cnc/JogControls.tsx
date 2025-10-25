@@ -15,15 +15,9 @@ export interface JogControlsProps {
 export const JogControls = React.forwardRef<HTMLDivElement, JogControlsProps>(
   ({ onJog, onZero, disabled = false, className }, ref) => {
     return (
-      <Card ref={ref} className={cn('p-6', className)}>
-        <div className="space-y-6">
-          <div className="text-center">
-            <h3 className="text-lg font-semibold mb-2">Jog Controls</h3>
-            <Badge variant="info">Manual Control</Badge>
-          </div>
-
-          {/* XY Controls */}
-          <div className="flex flex-col items-center space-y-2">
+      <div ref={ref} className={cn('space-y-6', className)}>
+        {/* XY Controls */}
+        <div className="flex flex-col items-center space-y-2">
             <Button
               variant="secondary"
               size="jog"
@@ -102,35 +96,34 @@ export const JogControls = React.forwardRef<HTMLDivElement, JogControlsProps>(
             </div>
           </div>
 
-          {/* Zero Buttons */}
-          <div className="flex justify-center space-x-2">
-            <Button
-              variant="outline"
-              size="sm"
-              disabled={disabled}
-              onClick={() => onZero('X')}
-            >
-              Zero X
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              disabled={disabled}
-              onClick={() => onZero('Y')}
-            >
-              Zero Y
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              disabled={disabled}
-              onClick={() => onZero('Z')}
-            >
-              Zero Z
-            </Button>
-          </div>
+        {/* Zero Buttons */}
+        <div className="flex justify-center space-x-2">
+          <Button
+            variant="outline"
+            size="sm"
+            disabled={disabled}
+            onClick={() => onZero('X')}
+          >
+            Zero X
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            disabled={disabled}
+            onClick={() => onZero('Y')}
+          >
+            Zero Y
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            disabled={disabled}
+            onClick={() => onZero('Z')}
+          >
+            Zero Z
+          </Button>
         </div>
-      </Card>
+      </div>
     );
   }
 );
@@ -229,14 +222,12 @@ interface JogDistanceControlProps {
 export const JogDistanceControl = React.forwardRef<HTMLDivElement, JogDistanceControlProps>(
   ({ distance, onDistanceChange, presets = [0.1, 1, 10, 100], disabled = false, className }, ref) => {
     return (
-      <Card ref={ref} className={cn('p-4', className)}>
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h4 className="text-sm font-medium">Jog Distance</h4>
-            <span className="font-mono text-sm font-bold">{distance} mm</span>
-          </div>
-          
-          <div className="grid grid-cols-2 gap-2">
+      <div ref={ref} className={cn('space-y-4', className)}>
+        <div className="flex items-center justify-between">
+          <span className="font-mono text-sm font-bold">{distance} mm</span>
+        </div>
+
+        <div className="grid grid-cols-2 gap-2">
             {presets.map((preset) => (
               <button
                 key={preset}
@@ -255,28 +246,27 @@ export const JogDistanceControl = React.forwardRef<HTMLDivElement, JogDistanceCo
             ))}
           </div>
           
-          <div className="space-y-2">
-            <label htmlFor="custom-distance" className="text-xs text-muted-foreground">
-              Custom Distance:
-            </label>
-            <input
-              id="custom-distance"
-              type="number"
-              value={distance}
-              onChange={(e) => onDistanceChange(Number(e.target.value))}
-              disabled={disabled}
-              min="0.01"
-              max="1000"
-              step="0.01"
-              className={cn(
-                "w-full px-3 py-2 text-sm rounded-lg border border-border bg-background",
-                "focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent",
-                disabled && "opacity-50 cursor-not-allowed"
-              )}
-            />
-          </div>
+        <div className="space-y-2">
+          <label htmlFor="custom-distance" className="text-xs text-muted-foreground">
+            Custom Distance:
+          </label>
+          <input
+            id="custom-distance"
+            type="number"
+            value={distance}
+            onChange={(e) => onDistanceChange(Number(e.target.value))}
+            disabled={disabled}
+            min="0.01"
+            max="1000"
+            step="0.01"
+            className={cn(
+              "w-full px-3 py-2 text-sm rounded-lg border border-border bg-background",
+              "focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent",
+              disabled && "opacity-50 cursor-not-allowed"
+            )}
+          />
         </div>
-      </Card>
+      </div>
     );
   }
 );

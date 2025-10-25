@@ -5,12 +5,12 @@
  */
 
 // Notification Components
-export { default as NotificationBell } from './NotificationBell';
-export { default as NotificationManager } from './NotificationManager';
-export { default as NotificationProvider } from './NotificationProvider';
-export { default as NotificationSystem } from './NotificationSystem';
-export { default as ToastComponent } from './ToastComponent';
-export { default as ToastContainer } from './ToastContainer';
+export { NotificationBell } from './NotificationBell';
+export { notificationManager } from './NotificationManager';
+export * from './NotificationProvider';
+export * from './NotificationSystem';
+export * from './ToastComponent';
+export * from './ToastContainer';
 
 // Simple notifications for basic use cases
 export { Notification, NotificationContainer, useNotifications } from './SimpleNotifications';

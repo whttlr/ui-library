@@ -186,7 +186,7 @@ export const JobSetupForm: React.FC<JobSetupFormProps> = ({
         {/* Form Actions */}
         <div className="flex justify-end gap-3 pt-6 border-t border-border">
           {onCancel && (
-            <Button variant="outline" onClick={onCancel} disabled={loading}>
+            <Button variant="outline-default" onClick={onCancel} disabled={loading}>
               Cancel
             </Button>
           )}

@@ -128,14 +128,14 @@ export const StaggerChildren: React.FC<StaggerChildrenProps> = ({
     </motion.div>
 );
 
-export interface AnimatedCardProps {
+export interface SimpleAnimatedCardProps {
   children: React.ReactNode
   delay?: number
   hover?: boolean
   className?: string
 }
 
-export const AnimatedCard = React.forwardRef<HTMLDivElement, AnimatedCardProps>(({
+export const SimpleAnimatedCard = React.forwardRef<HTMLDivElement, SimpleAnimatedCardProps>(({
   children,
   delay = 0,
   hover = true,
@@ -153,7 +153,7 @@ export const AnimatedCard = React.forwardRef<HTMLDivElement, AnimatedCardProps>(
       {children}
     </motion.div>
 ));
-AnimatedCard.displayName = 'AnimatedCard';
+SimpleAnimatedCard.displayName = 'SimpleAnimatedCard';
 
 export interface LoadingTransitionProps {
   isLoading: boolean

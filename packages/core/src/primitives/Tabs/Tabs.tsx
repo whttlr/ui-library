@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {
+  tokens,
   getTabsSizeStyles,
   getTabsListStyles,
   getTabsButtonStyles,
@@ -191,15 +192,15 @@ export const TabsTrigger = React.forwardRef<HTMLButtonElement, {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: '0.75rem 1rem',
-    fontSize: '1rem',
-    fontWeight: 500,
+    padding: `${tokens.spacing.md} ${tokens.spacing.base}`,
+    fontSize: tokens.typography.fontSize.md,
+    fontWeight: tokens.typography.fontWeight.medium,
     border: 'none',
     background: 'none',
-    color: tokens.colors.text.disabled,
+    color: tokens.colors.text.secondary,
     cursor: disabled ? 'not-allowed' : 'pointer',
-    borderRadius: '0.375rem',
-    transition: 'all 0.2s ease-in-out',
+    borderRadius: tokens.radius.md,
+    transition: tokens.transitions.all,
     opacity: disabled ? 0.5 : 1,
     outline: 'none',
     ...style,
@@ -228,7 +229,7 @@ export const TabsContent = React.forwardRef<HTMLDivElement, {
   style?: React.CSSProperties;
 }>(({ value, children, className, style, ...props }, ref) => {
   const contentStyles: React.CSSProperties = {
-    padding: '1rem 0',
+    padding: `${tokens.spacing.base} 0`,
     outline: 'none',
     ...style,
   };

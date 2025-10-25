@@ -119,7 +119,7 @@ export const Drawer: React.FC<DrawerProps> = ({
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         @keyframes drawerOverlayFadeIn {
           from { opacity: 0; }
           to { opacity: 1; }

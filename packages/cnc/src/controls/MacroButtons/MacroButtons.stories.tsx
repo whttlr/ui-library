@@ -428,7 +428,7 @@ export const CompactVersion: Story = {
         </div>
         <div style={{ marginTop: '1rem' }}>
           <Button 
-            variant="outline" 
+            variant="outline-default" 
             size="sm" 
             onClick={() => setShowDetails(!showDetails)}
           >

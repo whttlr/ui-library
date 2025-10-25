@@ -7,7 +7,7 @@ import {
   TrendingUp,
   TrendingDown
 } from 'lucide-react';
-import { Button, tokens, cn } from '@whttlr/ui-core';
+import { Button, legacyTokens as tokens, cn } from '@whttlr/ui-core';
 
 export interface FeedRateOverrideProps {
   currentOverride: number
@@ -40,7 +40,7 @@ export const FeedRateOverride: React.FC<FeedRateOverrideProps> = ({
   const containerStyles: React.CSSProperties = {
     backgroundColor: tokens.colors.bg.secondary,
     borderRadius: tokens.radius.lg,
-    border: `1px solid ${tokens.colors.border.default}`,
+    border: `1px solid ${tokens.colors.border.primary}`,
     padding: tokens.spacing.lg,
   };
 
@@ -156,7 +156,7 @@ export const FeedRateOverride: React.FC<FeedRateOverrideProps> = ({
       {/* Percentage Display */}
       <div style={displayContainerStyles}>
         <Button
-          variant="outline"
+          variant="outline-default"
           size="icon"
           onClick={handleDecrement}
           disabled={disabled || currentOverride <= min}
@@ -194,7 +194,7 @@ export const FeedRateOverride: React.FC<FeedRateOverrideProps> = ({
         </div>
 
         <Button
-          variant="outline"
+          variant="outline-default"
           size="icon"
           onClick={handleIncrement}
           disabled={disabled || currentOverride >= max}
@@ -309,7 +309,7 @@ export const CompactFeedRateOverride: React.FC<CompactFeedRateOverrideProps> = (
     padding: `${tokens.spacing.sm} ${tokens.spacing.md}`,
     backgroundColor: tokens.colors.bg.secondary,
     borderRadius: tokens.radius.md,
-    border: `1px solid ${tokens.colors.border.default}`,
+    border: `1px solid ${tokens.colors.border.primary}`,
   };
 
   const displayStyles: React.CSSProperties = {
@@ -354,7 +354,7 @@ export const CompactFeedRateOverride: React.FC<CompactFeedRateOverrideProps> = (
       </div>
 
       <div style={{ 
-        borderLeft: `1px solid ${tokens.colors.border.default}`,
+        borderLeft: `1px solid ${tokens.colors.border.primary}`,
         height: '24px',
         margin: `0 ${tokens.spacing.xs}`,
       }} />

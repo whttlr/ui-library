@@ -48,23 +48,23 @@ const getMetricCardVariantStyles = (variant: string = 'default') => {
   const variantColors = {
     default: {
       iconColor: tokens.colors.primary.main,
-      iconBg: `${tokens.colors.primary.main}10`,
+      iconBg: 'transparent',
     },
     success: {
       iconColor: tokens.colors.status.success,
-      iconBg: `${tokens.colors.status.success}10`,
+      iconBg: 'transparent',
     },
     warning: {
       iconColor: tokens.colors.status.warning,
-      iconBg: `${tokens.colors.status.warning}10`,
+      iconBg: 'transparent',
     },
     error: {
       iconColor: tokens.colors.status.error,
-      iconBg: `${tokens.colors.status.error}10`,
+      iconBg: 'transparent',
     },
     info: {
       iconColor: tokens.colors.status.info,
-      iconBg: `${tokens.colors.status.info}10`,
+      iconBg: 'transparent',
     },
   };
   
@@ -192,7 +192,9 @@ const MetricCard = React.forwardRef<HTMLDivElement, MetricCardProps>(
               }}
             >
               {React.cloneElement(icon as React.ReactElement, { 
-                size: sizeStyles.iconSize 
+                size: sizeStyles.iconSize,
+                color: finalIconColor,
+                strokeWidth: 2,
               })}
             </CardIcon>
           )}

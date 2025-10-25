@@ -96,13 +96,13 @@ export const ProgramControl: React.FC<ProgramControlProps> = ({
   const getStatusColor = () => {
     switch (status) {
       case 'running':
-        return tokens.colors.success.main;
+        return tokens.colors.status.success;
       case 'paused':
-        return tokens.colors.warning.main;
+        return tokens.colors.status.warning;
       case 'error':
-        return tokens.colors.destructive.main;
+        return tokens.colors.status.error;
       case 'completed':
-        return tokens.colors.success.main;
+        return tokens.colors.status.success;
       default:
         return tokens.colors.text.secondary;
     }
@@ -128,7 +128,7 @@ export const ProgramControl: React.FC<ProgramControlProps> = ({
   const containerStyles: React.CSSProperties = {
     backgroundColor: tokens.colors.bg.secondary,
     borderRadius: tokens.radius.lg,
-    border: `1px solid ${tokens.colors.border.default}`,
+    border: `1px solid ${tokens.colors.border.primary}`,
     padding: tokens.spacing.lg,
   };
 
@@ -215,7 +215,7 @@ export const ProgramControl: React.FC<ProgramControlProps> = ({
           <div style={{ display: 'flex', gap: tokens.spacing.sm }}>
             {onLoadProgram && (
               <Button
-                variant="outline"
+                variant="outline-default"
                 size="sm"
                 onClick={onLoadProgram}
                 disabled={disabled}
@@ -226,7 +226,7 @@ export const ProgramControl: React.FC<ProgramControlProps> = ({
             )}
             {onSaveProgram && (
               <Button
-                variant="outline"
+                variant="outline-default"
                 size="sm"
                 onClick={onSaveProgram}
                 disabled={disabled}
@@ -304,8 +304,8 @@ export const ProgramControl: React.FC<ProgramControlProps> = ({
       {hasError && errorMessage && (
         <Card style={{ 
           padding: tokens.spacing.md,
-          backgroundColor: `${tokens.colors.destructive.main}15`,
-          border: `1px solid ${tokens.colors.destructive.main}40`,
+          backgroundColor: `${tokens.colors.status.error}15`,
+          border: `1px solid ${tokens.colors.status.error}40`,
           marginBottom: tokens.spacing.lg,
         }}>
           <div style={{ 
@@ -313,10 +313,10 @@ export const ProgramControl: React.FC<ProgramControlProps> = ({
             alignItems: 'center', 
             gap: tokens.spacing.sm,
           }}>
-            <AlertCircle size={16} color={tokens.colors.destructive.main} />
+            <AlertCircle size={16} color={tokens.colors.status.error} />
             <span style={{ 
               fontSize: tokens.text.size.sm[0],
-              color: tokens.colors.destructive.main,
+              color: tokens.colors.status.error,
             }}>
               {errorMessage}
             </span>
@@ -369,7 +369,7 @@ export const ProgramControl: React.FC<ProgramControlProps> = ({
 
         {/* Reset Button */}
         <Button
-          variant="outline"
+          variant="outline-default"
           size="lg"
           onClick={onReset}
           disabled={disabled}
@@ -385,10 +385,10 @@ export const ProgramControl: React.FC<ProgramControlProps> = ({
         display: 'flex', 
         gap: tokens.spacing.sm,
         paddingTop: tokens.spacing.md,
-        borderTop: `1px solid ${tokens.colors.border.default}`,
+        borderTop: `1px solid ${tokens.colors.border.primary}`,
       }}>
         <Button
-          variant="outline"
+          variant="outline-default"
           size="sm"
           onClick={onSingleStep}
           disabled={!canStep}
@@ -483,13 +483,13 @@ export const CompactProgramControl: React.FC<CompactProgramControlProps> = ({
   const getStatusColor = () => {
     switch (status) {
       case 'running':
-        return tokens.colors.success.main;
+        return tokens.colors.status.success;
       case 'paused':
-        return tokens.colors.warning.main;
+        return tokens.colors.status.warning;
       case 'error':
-        return tokens.colors.destructive.main;
+        return tokens.colors.status.error;
       case 'completed':
-        return tokens.colors.success.main;
+        return tokens.colors.status.success;
       default:
         return tokens.colors.text.secondary;
     }
@@ -503,7 +503,7 @@ export const CompactProgramControl: React.FC<CompactProgramControlProps> = ({
     padding: tokens.spacing.md,
     backgroundColor: tokens.colors.bg.secondary,
     borderRadius: tokens.radius.md,
-    border: `1px solid ${tokens.colors.border.default}`,
+    border: `1px solid ${tokens.colors.border.primary}`,
   };
 
   return (

@@ -1,2 +1,4 @@
-export { JogControls, JogSpeedControl, JogDistanceControl } from './JogControls';
-export type { JogControlsProps, JogSpeedControlProps, JogDistanceControlProps } from './JogControls';
+export { JogControls } from './JogControls';
+export type { JogControlsProps } from './JogControls';
+export { JogDistanceControl } from './JogDistanceControl';
+export type { JogDistanceControlProps } from './JogDistanceControl';

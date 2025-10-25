@@ -8,8 +8,8 @@
 export { defaultFormConfig, getFormConfig } from './config';
 export type { FormConfig } from './config';
 
-// CNC Forms
-export { default as CNCForms } from './CNCForms';
+// CNC Forms - re-export everything from CNCForms
+export * from './CNCForms';
 export * from './JobSetupForm';
 export * from './MachineSetupForm';
 export * from './QuickJogForm';

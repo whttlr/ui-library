@@ -422,7 +422,7 @@ export const RealTimeSimulation: Story = {
               Real-Time Alarm Simulation
             </h4>
             <Button
-              variant="outline"
+              variant="outline-default"
               size="sm"
               onClick={addRandomAlarm}
               leftIcon={<Plus size={16} />}

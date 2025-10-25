@@ -6,6 +6,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '../utils';
+import { tokens } from '../utils/tokens';
 
 export interface AnimatedProgressProps {
   value: number;
@@ -13,7 +14,6 @@ export interface AnimatedProgressProps {
   label?: string;
   showPercentage?: boolean;
   color?: 'primary' | 'success' | 'warning' | 'danger';
-  size?: 'sm' | 'md' | 'lg';
   animated?: boolean;
   striped?: boolean;
   className?: string;
@@ -25,44 +25,60 @@ export const AnimatedProgress: React.FC<AnimatedProgressProps> = ({
   label,
   showPercentage = true,
   color = 'primary',
-  size = 'md',
   animated = true,
   striped = false,
   className,
 }) => {
   const [displayValue, setDisplayValue] = useState(0);
   const percentage = Math.min((value / max) * 100, 100);
-  
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setDisplayValue(percentage);
     }, 100);
     return () => clearTimeout(timer);
   }, [percentage]);
-  
-  const colorClasses = {
-    primary: 'from-primary to-primary/80',
-    success: 'from-green-500 to-green-600',
-    warning: 'from-amber-500 to-amber-600',
-    danger: 'from-red-500 to-red-600',
+
+  const colorStyles = {
+    primary: {
+      background: `linear-gradient(to right, ${tokens.colors.primary.main}, hsl(262, 83%, 48%))`,
+    },
+    success: {
+      background: 'linear-gradient(to right, hsl(142, 76%, 36%), hsl(142, 76%, 26%))',
+    },
+    warning: {
+      background: 'linear-gradient(to right, hsl(38, 92%, 50%), hsl(38, 92%, 40%))',
+    },
+    danger: {
+      background: 'linear-gradient(to right, hsl(0, 84%, 60%), hsl(0, 84%, 50%))',
+    },
   };
-  
-  const sizeClasses = {
-    sm: 'h-2',
-    md: 'h-4',
-    lg: 'h-6',
-  };
-  
+
   return (
-    <div className={cn('w-full', className)}>
+    <div className={cn(className)} style={{ width: '100%' }}>
       {(label || showPercentage) && (
-        <div className="flex justify-between items-center mb-2">
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: '8px'
+        }}>
           {label && (
-            <span className="text-sm font-medium text-foreground">{label}</span>
+            <span style={{
+              fontSize: '0.875rem',
+              fontWeight: 500,
+              color: tokens.colors.text.primary
+            }}>
+              {label}
+            </span>
           )}
           {showPercentage && (
-            <motion.span 
-              className="text-sm font-mono text-secondary-400"
+            <motion.span
+              style={{
+                fontSize: '0.875rem',
+                fontFamily: tokens.text.family.mono.join(', '),
+                color: tokens.colors.text.secondary
+              }}
               key={percentage}
               initial={{ scale: 1.2 }}
               animate={{ scale: 1 }}
@@ -73,28 +89,48 @@ export const AnimatedProgress: React.FC<AnimatedProgressProps> = ({
           )}
         </div>
       )}
-      
-      <div className={cn(
-        'relative overflow-hidden rounded-full bg-secondary-200',
-        sizeClasses[size]
-      )}>
+
+      <div
+        style={{
+          position: 'relative',
+          overflow: 'hidden',
+          borderRadius: '9999px',
+          backgroundColor: tokens.colors.bg.tertiary,
+          height: '8px',
+        }}
+      >
         <motion.div
-          className={cn(
-            'h-full bg-gradient-to-r rounded-full relative',
-            colorClasses[color],
-            striped && 'bg-stripes',
-            animated && 'animate-pulse'
-          )}
+          style={{
+            height: '100%',
+            borderRadius: '9999px',
+            position: 'relative',
+            ...colorStyles[color],
+          }}
           initial={{ width: 0 }}
           animate={{ width: `${displayValue}%` }}
-          transition={{ 
-            duration: 0.8, 
+          transition={{
+            duration: 0.8,
             ease: "easeOut",
             delay: 0.1
           }}
         >
           {animated && (
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" />
+            <motion.div
+              style={{
+                position: 'absolute',
+                inset: 0,
+                background: 'linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent)',
+                backgroundSize: '200% 100%',
+              }}
+              animate={{
+                backgroundPosition: ['200% 0', '-200% 0'],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: 'linear',
+              }}
+            />
           )}
         </motion.div>
       </div>

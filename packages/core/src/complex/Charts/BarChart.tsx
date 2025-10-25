@@ -158,6 +158,9 @@ export const BarChart: React.FC<BarChartProps> = ({
                 <Tooltip 
                   formatter={formatTooltipValue}
                   contentStyle={getChartTooltipStyles()}
+                  labelStyle={{ color: getChartTooltipStyles().color }}
+                  itemStyle={{ color: getChartTooltipStyles().color }}
+                  cursor={{ fill: 'rgba(255, 255, 255, 0.1)' }}
                 />
               )}
               

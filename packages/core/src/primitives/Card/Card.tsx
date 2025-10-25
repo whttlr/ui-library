@@ -111,23 +111,83 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
 );
 Card.displayName = 'Card';
 
-const CardHeader = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, style, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn('', className)}
-    style={{
-      display: 'flex',
-      flexDirection: 'column',
-      gap: tokens.spacing.sm,
-      padding: tokens.card.padding.md,
-      ...style
-    }}
-    {...props}
-  />
-));
+export interface CardHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Optional title text (renders as h3) */
+  title?: string;
+  /** Optional actions/buttons to display on the right side */
+  actions?: React.ReactNode;
+  /** Show border-bottom separator */
+  bordered?: boolean;
+  /** Use compact header style (smaller padding, secondary background) */
+  compact?: boolean;
+}
+
+const CardHeader = React.forwardRef<HTMLDivElement, CardHeaderProps>(
+  ({ className, style, title, actions, bordered = false, compact = false, children, ...props }, ref) => {
+    // If title or actions are provided, use the new header layout
+    if (title || actions) {
+      return (
+        <div
+          ref={ref}
+          className={cn('', className)}
+          style={{
+            borderBottom: bordered ? `1px solid hsl(240, 3.7%, 15.9%)` : undefined,
+            backgroundColor: compact ? tokens.colors.bg.secondary : undefined,
+            padding: compact ? `${tokens.spacing.sm} ${tokens.spacing.lg}` : tokens.card.padding.md,
+            ...style
+          }}
+          {...props}
+        >
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}>
+            {title && (
+              <h3 style={{
+                fontSize: compact ? '0.875rem' : '1.25rem',
+                fontWeight: 500,
+                color: tokens.colors.text.primary,
+                margin: 0,
+              }}>
+                {title}
+              </h3>
+            )}
+            {actions && (
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: tokens.spacing.sm,
+              }}>
+                {actions}
+              </div>
+            )}
+          </div>
+          {children}
+        </div>
+      );
+    }
+
+    // Default behavior - vertical layout without title/actions
+    return (
+      <div
+        ref={ref}
+        className={cn('', className)}
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: tokens.spacing.sm,
+          padding: tokens.card.padding.md,
+          borderBottom: bordered ? `1px solid hsl(240, 3.7%, 15.9%)` : undefined,
+          ...style
+        }}
+        {...props}
+      >
+        {children}
+      </div>
+    );
+  }
+);
 CardHeader.displayName = 'CardHeader';
 
 const CardTitle = React.forwardRef<
@@ -138,13 +198,13 @@ const CardTitle = React.forwardRef<
     ref={ref}
     className={cn('', className)}
     style={{
-      fontSize: '1.125rem', // tokens.text.size.lg[0] would be array
-      fontWeight: tokens.text.weight.semibold,
-      lineHeight: 1.2,
+      fontSize: tokens.typography.fontSize.lg,
+      fontWeight: tokens.typography.fontWeight.semibold,
+      lineHeight: tokens.typography.lineHeight.tight,
       letterSpacing: '-0.025em',
       color: tokens.colors.text.primary,
       margin: 0,
-      fontFamily: tokens.text.family.sans.join(', '),
+      fontFamily: tokens.typography.fontFamily.sans,
       ...style
     }}
     {...props}
@@ -160,10 +220,10 @@ const CardDescription = React.forwardRef<
     ref={ref}
     className={cn('', className)}
     style={{
-      fontSize: '0.875rem', // 14px
+      fontSize: tokens.typography.fontSize.base,
       color: tokens.colors.text.secondary,
       margin: 0,
-      fontFamily: tokens.text.family.sans.join(', '),
+      fontFamily: tokens.typography.fontFamily.sans,
       ...style
     }}
     {...props}
@@ -188,23 +248,45 @@ const CardContent = React.forwardRef<
 ));
 CardContent.displayName = 'CardContent';
 
-const CardFooter = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, style, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn('', className)}
-    style={{
-      display: 'flex',
-      alignItems: 'center',
-      padding: tokens.card.padding.md,
-      paddingTop: 0,
-      ...style
-    }}
-    {...props}
-  />
-));
+export interface CardFooterProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Stick to bottom of card container */
+  sticky?: boolean;
+  /** Show border-top separator */
+  bordered?: boolean;
+  /** Alignment of footer content */
+  align?: 'left' | 'center' | 'right' | 'space-between';
+  /** Remove default padding (allows footer to extend to edges) */
+  noPadding?: boolean;
+}
+
+const CardFooter = React.forwardRef<HTMLDivElement, CardFooterProps>(
+  ({ className, style, sticky = false, bordered = true, align = 'left', noPadding = false, ...props }, ref) => {
+    const alignMap: Record<string, React.CSSProperties['justifyContent']> = {
+      'left': 'flex-start',
+      'center': 'center',
+      'right': 'flex-end',
+      'space-between': 'space-between',
+    };
+
+    return (
+      <div
+        ref={ref}
+        className={cn('', className)}
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: alignMap[align],
+          padding: noPadding ? 0 : tokens.card.padding.md,
+          paddingTop: noPadding ? 0 : tokens.spacing.md,
+          marginTop: sticky ? 'auto' : undefined,
+          borderTop: bordered ? `1px solid hsl(240, 3.7%, 15.9%)` : undefined,
+          ...style
+        }}
+        {...props}
+      />
+    );
+  }
+);
 CardFooter.displayName = 'CardFooter';
 
 // CNC-specific card variants
@@ -258,7 +340,7 @@ DashboardCard.displayName = 'DashboardCard';
 const CardIcon = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
->(({ className, style, ...props }, ref) => (
+>(({ className, style, children, ...props }, ref) => (
   <div
     ref={ref}
     className={cn('', className)}
@@ -266,15 +348,20 @@ const CardIcon = React.forwardRef<
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      width: '3rem',
-      height: '3rem',
+      width: tokens.spacing['3xl'],
+      height: tokens.spacing['3xl'],
       borderRadius: tokens.radius.lg,
-      backgroundColor: `${tokens.colors.primary.main}10`, // 10% opacity
-      color: tokens.colors.primary.main,
+      backgroundColor: `${tokens.colors.bg.tertiary}`,
+      color: tokens.colors.text.primary,
+      flexShrink: 0,
       ...style
     }}
     {...props}
-  />
+  >
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', lineHeight: 0 }}>
+      {children}
+    </div>
+  </div>
 ));
 CardIcon.displayName = 'CardIcon';
 
@@ -286,9 +373,9 @@ const CardValue = React.forwardRef<
     ref={ref}
     className={cn('', className)}
     style={{
-      fontSize: '2rem', // Large display size
-      fontWeight: tokens.text.weight.bold,
-      fontFamily: tokens.text.family.mono.join(', '),
+      fontSize: tokens.typography.fontSize['2xl'],
+      fontWeight: tokens.typography.fontWeight.bold,
+      fontFamily: tokens.typography.fontFamily.mono,
       letterSpacing: '-0.05em',
       lineHeight: 1,
       color: tokens.colors.text.primary,
@@ -323,9 +410,9 @@ const CardChange = React.forwardRef<
       ref={ref}
       className={cn('', className)}
       style={{
-        fontSize: '0.875rem', // 14px
-        fontWeight: tokens.text.weight.medium,
-        fontFamily: tokens.text.family.mono.join(', '),
+        fontSize: tokens.typography.fontSize.base,
+        fontWeight: tokens.typography.fontWeight.medium,
+        fontFamily: tokens.typography.fontFamily.mono,
         ...variantStyles[variant],
         ...style
       }}
