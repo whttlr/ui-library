@@ -9,7 +9,7 @@ export { SafetyControlPanel } from './EmergencyStop';
 export { CoordinateDisplay, CompactCoordinateDisplay } from './CoordinateDisplay';
 export { StatusIndicator, ConnectionStatus, StatusDashboard } from './StatusIndicators';
 export { default as MachineDisplay2D } from './MachineDisplay2D';
-export { default as WorkingAreaPreview } from './WorkingAreaPreview';
+// export { default as WorkingAreaPreview } from './WorkingAreaPreview'; // Disabled - causes React reconciler issues
 
 export type { JogControlsProps } from './JogControls';
 export type { SafetyControlPanelProps } from './EmergencyStop';

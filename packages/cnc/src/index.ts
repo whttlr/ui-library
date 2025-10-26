@@ -11,7 +11,7 @@ export * from './controls';
 export * from './forms';
 
 // Visualization Components
-export * from './visualization';
+// export * from './visualization'; // Temporarily disabled - causes React reconciler issues
 
 // Mobile Components
 export * from './mobile';
@@ -33,10 +33,10 @@ export {
   QuickJogForm
 } from './forms';
 
-export {
-  MachineDisplay2D,
-  WorkingAreaPreview
-} from './visualization';
+// export {
+//   MachineDisplay2D,
+//   WorkingAreaPreview
+// } from './visualization'; // Temporarily disabled - causes React reconciler issues
 
 export {
   MobileControlsView
