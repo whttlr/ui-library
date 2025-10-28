@@ -27,6 +27,7 @@ export interface DrawerProps {
   closeOnOverlayClick?: boolean;
   closeOnEscape?: boolean;
   className?: string;
+  pushContent?: boolean; // When true, drawer pushes content instead of overlaying
 }
 
 export const Drawer: React.FC<DrawerProps> = ({
@@ -40,6 +41,7 @@ export const Drawer: React.FC<DrawerProps> = ({
   closeOnOverlayClick = true,
   closeOnEscape = true,
   className = '',
+  pushContent = false,
 }) => {
   useEffect(() => {
     if (!isOpen) return;
@@ -51,21 +53,44 @@ export const Drawer: React.FC<DrawerProps> = ({
     };
 
     document.addEventListener('keydown', handleEscape);
-    document.body.style.overflow = 'hidden';
+
+    // Only lock body scroll for overlay mode
+    if (!pushContent) {
+      document.body.style.overflow = 'hidden';
+    }
 
     return () => {
       document.removeEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'unset';
+      if (!pushContent) {
+        document.body.style.overflow = 'unset';
+      }
     };
-  }, [isOpen, closeOnEscape, onClose]);
+  }, [isOpen, closeOnEscape, onClose, pushContent]);
 
   if (!isOpen) return null;
 
   const getDrawerStyles = (): React.CSSProperties => {
     const sizeValue = getDrawerSizeStyles(size);
+    const baseStyles = getDrawerBaseStyles();
+    const positionStyles = getDrawerPositionStyles(position, sizeValue);
+
+    // For pushContent mode, adjust positioning
+    if (pushContent) {
+      return {
+        ...baseStyles,
+        ...positionStyles,
+        position: 'relative',
+        zIndex: 1,
+        height: '100vh',
+        boxShadow: 'none',
+        borderLeft: position === 'right' ? `1px solid ${tokens.colors.border.default}` : undefined,
+        borderRight: position === 'left' ? `1px solid ${tokens.colors.border.default}` : undefined,
+      };
+    }
+
     return {
-      ...getDrawerBaseStyles(),
-      ...getDrawerPositionStyles(position, sizeValue),
+      ...baseStyles,
+      ...positionStyles,
     };
   };
 
@@ -77,11 +102,14 @@ export const Drawer: React.FC<DrawerProps> = ({
 
   return (
     <>
-      <div
-        style={getDrawerOverlayStyles()}
-        onClick={handleOverlayClick}
-      />
-      
+      {/* Only render overlay in overlay mode */}
+      {!pushContent && (
+        <div
+          style={getDrawerOverlayStyles()}
+          onClick={handleOverlayClick}
+        />
+      )}
+
       <div
         className={className}
         style={getDrawerStyles()}

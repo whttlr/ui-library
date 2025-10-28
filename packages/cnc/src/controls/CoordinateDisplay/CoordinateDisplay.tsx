@@ -33,7 +33,6 @@ export const CoordinateDisplay: React.FC<CoordinateDisplayProps> = ({
   onZero,
   className,
 }) => {
-  const [displayMode, setDisplayMode] = React.useState<'work' | 'machine'>('work');
   const [lockedAxes, setLockedAxes] = React.useState<Set<'X' | 'Y' | 'Z'>>(new Set());
 
   const formatCoordinate = (value: number): string => {
@@ -41,7 +40,7 @@ export const CoordinateDisplay: React.FC<CoordinateDisplayProps> = ({
     return value.toFixed(decimals);
   };
 
-  const position = displayMode === 'work' ? workPosition : machinePosition;
+  const position = machinePosition;
 
   const toggleAxisLock = (axis: 'X' | 'Y' | 'Z') => {
     const newLocked = new Set(lockedAxes);
@@ -70,39 +69,11 @@ export const CoordinateDisplay: React.FC<CoordinateDisplayProps> = ({
         padding: 0,
       }}
     >
-      {/* Header with title and tab actions */}
+      {/* Header with title */}
       <Card.Header
         title="Position"
         bordered
         compact
-        actions={
-          <>
-            <Button
-              variant={displayMode === 'work' ? 'default' : 'ghost'}
-              size="sm"
-              onClick={() => setDisplayMode('work')}
-              style={{
-                height: '1.75rem',
-                padding: '0 0.5rem',
-                fontSize: '0.75rem',
-              }}
-            >
-              Work
-            </Button>
-            <Button
-              variant={displayMode === 'machine' ? 'default' : 'ghost'}
-              size="sm"
-              onClick={() => setDisplayMode('machine')}
-              style={{
-                height: '1.75rem',
-                padding: '0 0.5rem',
-                fontSize: '0.75rem',
-              }}
-            >
-              Machine
-            </Button>
-          </>
-        }
       />
 
       {/* Axis Displays */}

@@ -42,3 +42,4 @@ export * from './Drawer';
 export * from './Popover';
 export * from './Typography';
 export * from './HoverActionMenu';
+export * from './CodeEditor';
